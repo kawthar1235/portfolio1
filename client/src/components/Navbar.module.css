@@ -1,0 +1,105 @@
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 4rem;
+  background: var(--nav-bg);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid transparent;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  transition: background 0.35s, border-color 0.35s;
+}
+.nav.scrolled { border-bottom-color: var(--border); }
+
+.logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.04em;
+}
+.logo span { color: var(--cerulean); font-style: italic; }
+
+.links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+.link {
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text);
+  opacity: 0.55;
+  transition: opacity 0.2s, color 0.2s;
+}
+.link:hover { opacity: 1; color: var(--cerulean); }
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+.toggle {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--stat-bg);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  transition: all 0.25s;
+}
+.toggle:hover { background: var(--blush); border-color: var(--blush); }
+
+.cta {
+  background: transparent;
+  color: var(--text);
+  border: 1.5px solid var(--border);
+  padding: 0.48rem 1.3rem;
+  border-radius: 2rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all 0.22s;
+}
+.cta:hover { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+.burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  padding: 4px;
+}
+.burger span {
+  display: block;
+  width: 22px; height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+
+@media (max-width: 768px) {
+  .nav { padding: 1rem 1.5rem; }
+  .burger { display: flex; }
+  .links {
+    position: fixed;
+    top: 64px; left: 0; right: 0;
+    background: var(--nav-bg);
+    backdrop-filter: blur(18px);
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    gap: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  .links.open { transform: translateY(0); opacity: 1; pointer-events: all; }
+}
