@@ -5,12 +5,16 @@ import auth from '../middleware/authMiddleware.js';
 
 const router = Router();
 
-// TEMPORARY - delete after creating admin
+// TEMPORARY setup route - delete after use!
 router.get('/setup', async (req, res) => {
-  const exists = await Admin.findOne({ username: 'kawthar' });
-  if (exists) return res.json({ message: 'Admin already exists' });
-  await Admin.create({ username: 'kawthar', password: 'Kawthar1234' });
-  res.json({ message: 'Admin created! Now delete this route.' });
+  try {
+    const exists = await Admin.findOne({ username: 'kawthar' });
+    if (exists) return res.json({ message: 'Admin already exists!' });
+    await Admin.create({ username: 'kawthar', password: 'Kawthar1234' });
+    res.json({ message: 'Admin created successfully!' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
 router.post('/login',              login);
