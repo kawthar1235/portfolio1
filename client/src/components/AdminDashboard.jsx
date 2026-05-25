@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const API = "https://portfolio1-navy-mu.vercel.app/admin";
+const API = "https://portfolio-server-lbwm.onrender.com/api";
 
 // ── tiny helpers ──────────────────────────────────────────────────
 const api = async (path, method = "GET", body) => {
