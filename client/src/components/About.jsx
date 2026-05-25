@@ -59,7 +59,7 @@ export default function About() {
         </div>
 
         <div className={styles.actions}>
-          <a href="/resume.pdf" className="btn-primary" target="_blank" rel="noreferrer">Download CV</a>
+          <a href="/resume.pdf" target="_blank">Download CV</a>
           <a href="#contact" className="btn-ghost">Let's Chat</a>
         </div>
       </div>
