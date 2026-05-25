@@ -5,7 +5,6 @@ import auth from '../middleware/authMiddleware.js';
 
 const router = Router();
 
-// TEMPORARY setup route - delete after use!
 router.get('/setup', async (req, res) => {
   try {
     const exists = await Admin.findOne({ username: 'kawthar' });
