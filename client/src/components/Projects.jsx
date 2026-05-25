@@ -29,15 +29,18 @@ export default function Projects() {
   const [codeFilter,     setCodeFilter]     = useState('All');
   const [designFilter,   setDesignFilter]   = useState('All');
 
-  useEffect(() => {
+useEffect(() => {
     getProjects()
       .then(({ data }) => {
         const code   = data.filter(p => p.type === 'code');
         const design = data.filter(p => p.type === 'design');
-        if (code.length)   setCodeProjects(code);
-        if (design.length) setDesignProjects(design);
+        setCodeProjects(code.length ? code : []);
+        setDesignProjects(design.length ? design : []);
       })
-      .catch(() => {/* use fallback */});
+      .catch(() => {
+        setCodeProjects([]);
+        setDesignProjects([]);
+      });
   }, []);
 
   const filteredCode = codeFilter === 'All'
