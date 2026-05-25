@@ -90,7 +90,7 @@ export default function About() {
 
         <div className={styles.actions}>
           <a
-            href="#"
+            href="https://drive.google.com/file/d/10KEp84NphFAmx6q5I2okaAemH5UkKtHT/view?usp=sharing"
             className="btn-ghost"
             target="_blank"
             rel="noreferrer"
