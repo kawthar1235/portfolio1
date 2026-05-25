@@ -40,7 +40,7 @@ export default function Hero() {
           </p>
           <div className={styles.actions}>
             <a href="#about" className="btn-primary">About Me</a>
-            <a href="https://drive.google.com/file/d/10KEp84NphFAmx6q5I2okaAemH5UkKtHT/view?usp=sharing" className="btn-ghost" target="_blank" rel="noreferrer">Download Resume</a>
+            <a href="https://drive.google.com/file/d/10KEp84NphFAmx6q5I2okaAemH5UkKtHT/view?usp=sharing" className="btn-ghost" target="_blank" rel="kawtharferrer">Download Resume</a>
           </div>
           <div className={styles.socials}>
             <span>Find me</span>

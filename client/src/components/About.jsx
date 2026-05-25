@@ -97,7 +97,7 @@ export default function About() {
             href="https://drive.google.com/file/d/10KEp84NphFAmx6q5I2okaAemH5UkKtHT/view?usp=sharing"
             className="btn-ghost"
             target="_blank"
-            rel="noreferrer"
+            rel="kawtharferrer"
           >
             Download Resume
           </a>

@@ -19,8 +19,8 @@ export default function ProjectCard({ project, type = 'design' }) {
             ))}
           </div>
           <div className={styles.cLinks}>
-            {liveUrl   && <a href={liveUrl}   target="_blank" rel="noreferrer" className={styles.cLink}>Live →</a>}
-            {githubUrl && <a href={githubUrl} target="_blank" rel="noreferrer" className={styles.cLink}>GitHub →</a>}
+            {liveUrl   && <a href={liveUrl}   target="_blank" rel="kawtharferrer" className={styles.cLink}>Live →</a>}
+            {githubUrl && <a href={githubUrl} target="_blank" rel="kawtharferrer" className={styles.cLink}>GitHub →</a>}
           </div>
         </div>
       </div>
