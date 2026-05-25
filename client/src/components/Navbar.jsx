@@ -27,7 +27,7 @@ export default function Navbar() {
   return (
     <nav className={`${styles.nav}${scrolled ? ' ' + styles.scrolled : ''}`}>
       <Link to="/" className={styles.logo}>
-        kawthar<span>.</span>
+        nour<span>.</span>
       </Link>
 
       <ul className={`${styles.links}${menuOpen ? ' ' + styles.open : ''}`}>

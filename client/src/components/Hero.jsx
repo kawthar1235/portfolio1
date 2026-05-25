@@ -27,7 +27,7 @@ export default function Hero() {
         <div className={styles.blob2} />
 
         <div className={`${styles.left} fade-up`}>
-          <div className={styles.eyebrow}>Hi there, I'm kawthar</div>
+          <div className={styles.eyebrow}>Hi there, I'm Nour</div>
           <h1 className={styles.heading}>
             I design, I <em>code</em>,<br />
             I make things<br />
@@ -40,9 +40,7 @@ export default function Hero() {
           </p>
           <div className={styles.actions}>
             <a href="#about" className="btn-primary">About Me</a>
-            <a href="/resume.pdf" className="btn-ghost" target="_blank" rel="noreferrer">
-              Download Resume
-            </a>
+            <a href="https://drive.google.com/file/d/10KEp84NphFAmx6q5I2okaAemH5UkKtHT/view?usp=sharing" className="btn-ghost" target="_blank" rel="noreferrer">Download Resume</a>
           </div>
           <div className={styles.socials}>
             <span>Find me</span>

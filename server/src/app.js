@@ -11,7 +11,13 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'https://portfolio1-navy-mu.vercel.app'
+  ],
+  credentials: true
+}));
 app.use(express.json());
 
 // Routes
@@ -22,7 +28,7 @@ app.use('/api/admin',    adminRoutes);
 // Health check
 app.get('/api/health', (_, res) => res.json({ status: 'ok' }));
 
-// Error handler (must be last)
+// Error handler
 app.use(errorMiddleware);
 
 export default app;
