@@ -63,8 +63,8 @@ export default function About() {
 
         <div className={styles.stats}>
           {[
-            ['10+', 'Projects & designs completed'],
-            ['2027', 'Expected graduation'],
+            ['30+', 'Projects & designs completed'],
+            ['5+','Years of experience'],
             ['100%', 'Passion for learning']
           ].map(([n, l]) => (
             <div key={l}>
