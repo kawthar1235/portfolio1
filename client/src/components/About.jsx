@@ -4,12 +4,14 @@ import styles from './About.module.css';
 const TAGS = [
   'React',
   'JavaScript',
-  'Node.js',
+  'HTML',
+  'CSS',
   'Python',
-  'UI/UX',
+  'Java',
+  'SQL',
   'Figma',
-  'MongoDB',
-  'Frontend Development'
+  'UI/UX',
+  'GitHub'
 ];
 
 export default function About() {
@@ -19,7 +21,9 @@ export default function About() {
     const observer = new IntersectionObserver(
       (entries) =>
         entries.forEach((e) => {
-          if (e.isIntersecting) e.target.classList.add('visible');
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+          }
         }),
       { threshold: 0.1 }
     );
@@ -38,7 +42,7 @@ export default function About() {
 
         <div className={styles.badge}>
           <div className={styles.badgeBig}>Available</div>
-          <div className={styles.badgeSm}>for freelance work</div>
+          <div className={styles.badgeSm}>for internships & freelance</div>
         </div>
       </div>
 
@@ -46,22 +50,22 @@ export default function About() {
         <div className="section-eyebrow">01 — About Me</div>
 
         <h2 className="section-title">
-          Frontend developer who loves
-          <em> building modern experiences</em>
+          Software Engineering student who loves
+          <em> building modern digital experiences</em>
         </h2>
 
         <p className={styles.bio}>
-          I'm Kawthar — a Computer Science student passionate about frontend
-          development, UI/UX design, and creating clean digital experiences.
-          I enjoy turning ideas into interactive websites that feel smooth,
-          modern, and user-friendly.
+          I'm Kawthar Alkhawajah, a Software Engineering student at KFUPM
+          passionate about frontend development, UI/UX design, and building
+          responsive web applications. I enjoy combining creativity with code
+          to create user-friendly and visually engaging experiences.
         </p>
 
         <div className={styles.stats}>
           {[
-            ['10+', 'Projects built'],
-            ['3+', 'Technologies mastered'],
-            ['100%', 'Passion for coding']
+            ['10+', 'Projects & designs completed'],
+            ['2027', 'Expected graduation'],
+            ['100%', 'Passion for learning']
           ].map(([n, l]) => (
             <div key={l}>
               <div className={styles.statNum}>{n}</div>
@@ -71,13 +75,14 @@ export default function About() {
         </div>
 
         <blockquote className={styles.quote}>
-          "I believe great websites are not just functional — they should feel
-          beautiful, intuitive, and memorable."
+          "Great software is where creativity, usability, and technology work
+          together seamlessly."
         </blockquote>
 
         <p className={styles.extra}>
-          Outside coding, I enjoy exploring design trends, working on creative
-          projects, and learning new technologies to improve my skills every day.
+          Besides coding and designing, I enjoy participating in student
+          activities, exploring creative digital projects, and continuously
+          improving my technical and problem-solving skills.
         </p>
 
         <div className={styles.tags}>
