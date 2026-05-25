@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer className={styles.footer}>
       <div className={styles.inner}>
-        <div className={styles.logo}>nour<span>.</span></div>
+        <div className={styles.logo}>kawthar<span>.</span></div>
         <nav className={styles.nav}>
           {['About','Code','Design','Contact'].map(l => (
             <a key={l} href={`/#${l.toLowerCase()}`} className={styles.link}>{l}</a>
@@ -18,7 +18,7 @@ export default function Footer() {
         </div>
       </div>
       <div className={styles.bottom}>
-        <span>© {year} Nour. All rights reserved.</span>
+        <span>© {year} kawthar. All rights reserved.</span>
         <span>Made with <span className={styles.heart}>♥</span> and too much coffee.</span>
       </div>
     </footer>

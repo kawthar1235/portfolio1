@@ -27,7 +27,7 @@ export default function Hero() {
         <div className={styles.blob2} />
 
         <div className={`${styles.left} fade-up`}>
-          <div className={styles.eyebrow}>Hi there, I'm Nour</div>
+          <div className={styles.eyebrow}>Hi there, I'm kawthar</div>
           <h1 className={styles.heading}>
             I design, I <em>code</em>,<br />
             I make things<br />

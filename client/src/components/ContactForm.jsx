@@ -35,7 +35,7 @@ export default function ContactForm() {
             I'm always open to fun projects, collabs, or just a conversation
             about design and code over virtual coffee.
           </p>
-          <a className={styles.email} href="mailto:hello@nour.design">hello@nour.design</a>
+          <a className={styles.email} href="mailto:hello@kawthar.design">hello@kawthar.design</a>
           <div className={styles.socials}>
             {['Behance','GitHub','Instagram','LinkedIn'].map(s => (
               <a key={s} href="#" className={styles.sBtn}>{s.slice(0,2)}</a>

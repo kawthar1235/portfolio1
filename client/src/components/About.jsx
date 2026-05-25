@@ -30,7 +30,7 @@ export default function About() {
           Designer who <em>codes</em>,<br />coder who designs
         </h2>
         <p className={styles.bio}>
-          I'm Nour — I started with design because I couldn't stop making things pretty,
+          I'm kawthar — I started with design because I couldn't stop making things pretty,
           then learned to code because I couldn't stop wondering how things worked.
           Now I do both, and honestly it's the best decision I've ever made.
         </p>
