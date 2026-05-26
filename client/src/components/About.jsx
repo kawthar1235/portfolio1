@@ -95,7 +95,15 @@ export default function About() {
           improving my technical and problem-solving skills.
         </p>
 
-        <div className={styles.tags}>
+ <div
+  className={styles.tags}
+  style={{
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '2rem',
+    alignItems: 'flex-start',
+  }}
+>
           {TAGS.map((group) => (
             <div key={group.title} style={{ marginBottom: '1rem', width: '100%' }}>
               <div
@@ -110,7 +118,14 @@ export default function About() {
                 {group.title}
               </div>
 
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+              <div
+  style={{
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '0.7rem',
+    maxWidth: '700px',
+  }}
+>
                 {group.items.map((item) => (
                   <span key={item} className="tag">
                     {item}
