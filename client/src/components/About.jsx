@@ -95,37 +95,42 @@ export default function About() {
           improving my technical and problem-solving skills.
         </p>
 
- <div
-  className={styles.tags}
-  style={{
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '2rem',
-    alignItems: 'flex-start',
-  }}
->
+        <div
+          className={styles.tags}
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            gap: '2rem',
+            alignItems: 'flex-start',
+          }}
+        >
           {TAGS.map((group) => (
-            <div key={group.title} style={{ marginBottom: '1rem', width: '100%' }}>
+            <div
+              key={group.title}
+              style={{
+                minWidth: '160px',
+              }}
+            >
               <div
                 style={{
                   fontSize: '0.8rem',
                   letterSpacing: '0.08em',
                   textTransform: 'uppercase',
                   opacity: 0.7,
-                  marginBottom: '0.5rem',
+                  marginBottom: '0.75rem',
                 }}
               >
                 {group.title}
               </div>
 
               <div
-  style={{
-    display: 'flex',
-    flexWrap: 'wrap',
-    gap: '0.7rem',
-    maxWidth: '700px',
-  }}
->
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '0.7rem',
+                }}
+              >
                 {group.items.map((item) => (
                   <span key={item} className="tag">
                     {item}
