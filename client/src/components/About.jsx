@@ -97,13 +97,7 @@ export default function About() {
 
         <div className={styles.tags}>
           {TAGS.map((group) => (
-            <div
-              key={group.title}
-              style={{
-                marginBottom: '1rem',
-                width: '100%',
-              }}
-            >
+            <div key={group.title} style={{ marginBottom: '1rem', width: '100%' }}>
               <div
                 style={{
                   fontSize: '0.8rem',
@@ -116,13 +110,7 @@ export default function About() {
                 {group.title}
               </div>
 
-              <div
-                style={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  gap: '0.5rem',
-                }}
-              >
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                 {group.items.map((item) => (
                   <span key={item} className="tag">
                     {item}
