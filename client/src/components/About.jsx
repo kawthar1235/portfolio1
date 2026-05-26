@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import styles from './About.module.css';
 import Stickers from './Stickers';
+import profileImg from '../profile.png';
 
 const TAGS = [
   {
@@ -41,7 +42,11 @@ export default function About() {
   return (
     <section className={styles.about} id="about" ref={ref}>
       <div className={`${styles.photoWrap} fade-up`}>
-        <div className={styles.photo}>Kawthar</div>
+        <img
+  src={profileImg}
+  alt="Kawthar"
+  className={styles.photo}
+/>
 
         <div className={styles.badge}>
           <div className={styles.badgeBig}>Available</div>
