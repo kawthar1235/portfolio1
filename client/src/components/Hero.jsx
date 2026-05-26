@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import styles from './Hero.module.css';
+import Stickers from './Stickers';
 
 const MARQUEE_ITEMS = [
   'Brand Identity','React','UI Design','Python',
@@ -50,7 +51,7 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className={styles.right}>
+      <div className={styles.right}>
           <div className={styles.photoFrame}>Your Photo</div>
           <div className={`${styles.floatTag} ${styles.ft1}`}>
             <div className={styles.ftNum}>3+</div>
@@ -61,8 +62,8 @@ export default function Hero() {
             <div className={styles.ftLabel}>Projects done</div>
           </div>
         </div>
+        <Stickers section="hero" />
       </section>
-
       {/* Marquee */}
       <div className="marquee-bar">
         <div className="marquee-track">
