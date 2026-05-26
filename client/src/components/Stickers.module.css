@@ -37,43 +37,43 @@
 .f4.visible{animation:f4 5.5s ease-in-out infinite}
 .f5.visible{animation:f5 4.8s ease-in-out infinite}
 
-/* ── HERO positions ── */
-.h1{top:12%;right:4%}
-.h2{top:6%;left:2%}
-.h3{top:32%;left:1%}
-.h4{top:58%;left:1%;gap:4px;flex-wrap:wrap;max-width:78px;padding:9px}
-.h5{bottom:20%;right:2%}
-.h6{bottom:8%;left:3%}
-.h7{top:48%;right:2%}
+/* ── HERO positions — well spread ── */
+.h1{top:5%;right:3%}
+.h2{top:5%;left:2%}
+.h3{top:28%;left:1%}
+.h4{top:28%;right:2%;gap:4px;flex-wrap:wrap;max-width:78px;padding:9px}
+.h5{top:52%;left:2%}
+.h6{top:52%;right:2%}
+.h7{bottom:6%;left:2%}
 
-/* ── ABOUT positions ── */
-.a1{top:6%;right:1%}
-.a2{bottom:28%;right:1%}
-.a3{top:42%;left:1%;gap:4px;flex-wrap:wrap;max-width:75px;padding:9px}
-.a4{bottom:12%;right:2%}
-.a5{top:70%;left:1%}
-.a6{top:22%;left:2%;gap:6px}
+/* ── ABOUT positions — well spread ── */
+.a1{top:4%;right:2%}
+.a2{top:4%;left:2%}
+.a3{top:30%;right:1%;gap:4px;flex-wrap:wrap;max-width:75px;padding:9px}
+.a4{top:30%;left:2%}
+.a5{top:60%;right:2%}
+.a6{top:60%;left:2%;gap:6px}
 
-/* ── CODE positions ── */
-.c1{top:8%;right:2%}
-.c2{top:3%;left:1%}
+/* ── CODE positions — well spread ── */
+.c1{top:4%;left:2%}
+.c2{top:4%;right:2%}
 .c3{top:22%;left:1%}
-.c4{top:40%;right:1%}
-.c5{top:55%;left:2%}
-.c6{bottom:28%;right:1%}
-.c7{bottom:14%;left:1%}
-.c8{bottom:5%;right:2%}
-.c9{top:70%;right:3%;gap:4px;flex-wrap:wrap;max-width:76px;padding:9px}
+.c4{top:22%;right:1%}
+.c5{top:43%;left:2%}
+.c6{top:43%;right:1%}
+.c7{top:64%;left:1%}
+.c8{top:64%;right:2%}
+.c9{bottom:4%;left:45%;gap:4px;flex-wrap:wrap;max-width:76px;padding:9px}
 
-/* ── DESIGN positions ── */
-.d1{top:4%;right:2%}
-.d2{top:18%;right:1%}
-.d3{top:35%;left:1%}
-.d4{top:52%;right:2%}
-.d5{bottom:30%;left:1%}
-.d6{top:68%;left:2%;gap:4px;flex-wrap:wrap;max-width:78px;padding:9px}
-.d7{bottom:16%;right:1%}
-.d8{bottom:5%;left:2%;gap:6px}
+/* ── DESIGN positions — well spread ── */
+.d1{top:4%;left:2%}
+.d2{top:4%;right:1%}
+.d3{top:25%;right:1%}
+.d4{top:25%;left:2%}
+.d5{top:50%;right:2%}
+.d6{top:50%;left:1%;gap:4px;flex-wrap:wrap;max-width:78px;padding:9px}
+.d7{top:74%;left:2%}
+.d8{top:74%;right:1%;gap:6px}
 
 /* ── terminal ── */
 .termBar{display:flex;gap:5px;align-items:center;margin-bottom:6px}
