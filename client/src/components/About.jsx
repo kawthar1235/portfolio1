@@ -5,35 +5,24 @@ import Stickers from './Stickers';
 const TAGS = [
   {
     title: 'Frontend',
-    items: ['React', 'JavaScript', 'HTML', 'CSS']
+    items: ['React', 'JavaScript', 'HTML', 'CSS'],
   },
-
   {
     title: 'Backend',
-    items: ['Node.js', 'MongoDB', 'SQL', 'Python', 'Java']
+    items: ['Node.js', 'MongoDB', 'SQL', 'Python', 'Java'],
   },
-
   {
     title: 'Design',
-    items: [
-      'UI/UX',
-      'Figma',
-      'Illustrator',
-      'Procreate',
-      'Digital Design',
-      'Affinity Designer'
-    ]
+    items: ['UI/UX', 'Figma', 'Illustrator', 'Procreate', 'Digital Design', 'Affinity Designer'],
   },
-
   {
     title: 'Creative',
-    items: ['Video Editing']
+    items: ['Video Editing'],
   },
-
   {
     title: 'Tools',
-    items: ['GitHub']
-  }
+    items: ['GitHub'],
+  },
 ];
 
 export default function About() {
@@ -85,8 +74,8 @@ export default function About() {
         <div className={styles.stats}>
           {[
             ['30+', 'Projects & designs completed'],
-            ['5+','Years of experience'],
-            ['100%', 'Passion for learning']
+            ['5+', 'Years of experience'],
+            ['100%', 'Passion for learning'],
           ].map(([n, l]) => (
             <div key={l}>
               <div className={styles.statNum}>{n}</div>
@@ -107,10 +96,40 @@ export default function About() {
         </p>
 
         <div className={styles.tags}>
-          {TAGS.map((t) => (
-            <span key={t} className="tag">
-              {t}
-            </span>
+          {TAGS.map((group) => (
+            <div
+              key={group.title}
+              style={{
+                marginBottom: '1rem',
+                width: '100%',
+              }}
+            >
+              <div
+                style={{
+                  fontSize: '0.8rem',
+                  letterSpacing: '0.08em',
+                  textTransform: 'uppercase',
+                  opacity: 0.7,
+                  marginBottom: '0.5rem',
+                }}
+              >
+                {group.title}
+              </div>
+
+              <div
+                style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '0.5rem',
+                }}
+              >
+                {group.items.map((item) => (
+                  <span key={item} className="tag">
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
 
@@ -119,7 +138,7 @@ export default function About() {
             href="https://drive.google.com/file/d/10KEp84NphFAmx6q5I2okaAemH5UkKtHT/view?usp=sharing"
             className="btn-ghost"
             target="_blank"
-            rel="kawtharferrer"
+            rel="noreferrer"
           >
             Download Resume
           </a>
@@ -129,7 +148,8 @@ export default function About() {
           </a>
         </div>
       </div>
-<Stickers section="about" />
+
+      <Stickers section="about" />
     </section>
   );
 }
