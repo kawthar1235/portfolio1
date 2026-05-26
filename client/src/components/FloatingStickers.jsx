@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import "./floating-stickers.css";
+import star from "../assets/stickers/star.png";
 
 function DraggableSticker({
   src,
