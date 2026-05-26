@@ -15,14 +15,6 @@ const TAGS = [
     title: 'Design',
     items: ['UI/UX', 'Figma', 'Illustrator', 'Procreate', 'Digital Design', 'Affinity Designer'],
   },
-  {
-    title: 'Creative',
-    items: ['Video Editing'],
-  },
-  {
-    title: 'Tools',
-    items: ['GitHub'],
-  },
 ];
 
 export default function About() {
