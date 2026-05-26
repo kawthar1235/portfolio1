@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import styles from './About.module.css';
+import Stickers from './Stickers';
 
 const TAGS = [
   'React',
@@ -107,6 +108,7 @@ export default function About() {
           </a>
         </div>
       </div>
+<Stickers section="about" />
     </section>
   );
 }
