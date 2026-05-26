@@ -53,15 +53,6 @@ export function HeroStickers() {
         Figma
       </div>
 
-      {/* stars */}
-      <div data-sticker className={`${styles.s} ${styles.sDark} ${styles.f4} ${styles.h4} ${styles.sparkWrap}`} style={{animationDelay:'.25s'}}>
-        <span style={{fontSize:'18px',color:'#f2d478'}}>★</span>
-        <span style={{fontSize:'12px',color:'#c8b8f8'}}>✦</span>
-        <span style={{fontSize:'15px',color:'#f2a4c8'}}>★</span>
-        <span style={{fontSize:'9px', color:'#5dcaa5'}}>✦</span>
-        <span style={{fontSize:'13px',color:'#f2d478'}}>★</span>
-      </div>
-
       {/* code design create */}
       <div data-sticker className={`${styles.s} ${styles.sTeal} ${styles.pill} ${styles.f2} ${styles.h5}`} style={{animationDelay:'.3s'}}>
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#5dcaa5" strokeWidth="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
@@ -104,13 +95,7 @@ export function AboutStickers() {
         made with love
       </div>
 
-      {/* stars cluster */}
-      <div data-sticker className={`${styles.s} ${styles.sDark} ${styles.f4} ${styles.a3} ${styles.sparkWrap}`} style={{animationDelay:'.15s'}}>
-        <span style={{fontSize:'16px',color:'#f2d478'}}>★</span>
-        <span style={{fontSize:'10px',color:'#c8b8f8'}}>★</span>
-        <span style={{fontSize:'14px',color:'#f2a4c8'}}>★</span>
-        <span style={{fontSize:'8px', color:'#5dcaa5'}}>✦</span>
-      </div>
+
 
       {/* currently building */}
       <div data-sticker className={`${styles.s} ${styles.sBlue} ${styles.pill} ${styles.f1} ${styles.a4}`} style={{animationDelay:'.3s'}}>
@@ -225,19 +210,6 @@ export function DesignStickers() {
       <div data-sticker className={`${styles.s} ${styles.sPink} ${styles.pill} ${styles.f1} ${styles.d1}`} style={{animationDelay:'.1s'}}>
         <svg width="11" height="14" viewBox="0 0 38 57" fill="none"><path d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z" fill="#1abcfe"/><path d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 0 1-19 0z" fill="#0acf83"/><path d="M19 0v19h9.5a9.5 9.5 0 0 0 0-19H19z" fill="#ff7262"/><path d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z" fill="#f24e1e"/><path d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z" fill="#a259ff"/></svg>
         Figma
-      </div>
-
-      {/* wireframe */}
-      <div data-sticker className={`${styles.s} ${styles.sBlue} ${styles.col} ${styles.f2} ${styles.d2}`} style={{animationDelay:'.2s',minWidth:'140px'}}>
-        <div style={{width:'100%',height:'3px',background:'#1a4f8e',borderRadius:'2px',marginBottom:'3px'}}/>
-        <div style={{display:'flex',gap:'5px',width:'100%'}}>
-          <div style={{flex:2,height:'24px',border:'1px solid #2a6aae',borderRadius:'4px'}}/>
-          <div style={{flex:1,display:'flex',flexDirection:'column',gap:'3px'}}>
-            <div style={{height:'10px',border:'1px solid #2a6aae',borderRadius:'3px'}}/>
-            <div style={{height:'10px',border:'1px solid #2a6aae',borderRadius:'3px'}}/>
-          </div>
-        </div>
-        <span style={{fontSize:'9px',color:'#5a8aab',marginTop:'2px'}}>wireframe</span>
       </div>
 
       {/* color palette */}
