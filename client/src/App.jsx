@@ -8,15 +8,13 @@ import AdminDashboard from "./components/AdminDashboard";
 
 function MainLayout() {
   return (
-    <div style={{ position: "relative", minHeight: "100vh" }}>
-      <FloatingStickers />
 
       <div style={{ position: "relative", zIndex: 1 }}>
         <Navbar />
         <Outlet />
         <Footer />
       </div>
-    </div>
+
   );
 }
 
