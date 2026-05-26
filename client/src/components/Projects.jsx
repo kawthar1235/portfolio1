@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { getProjects } from '../services/api';
 import ProjectCard from './ProjectCard';
 import styles from './Projects.module.css';
+import Stickers from './Stickers';
 
 const DESIGN_FILTERS = ['All','Branding','UI','Illustration'];
 const CODE_FILTERS   = ['All','Web','App','Tools'];
@@ -80,6 +81,7 @@ useEffect(() => {
         <div className={styles.codeGrid}>
           {filteredCode.map(p => <ProjectCard key={p._id} project={p} type="code" />)}
         </div>
+        <Stickers section="code" />
       </section>
 
       {/* ── 03 DESIGN ── */}
@@ -109,6 +111,7 @@ useEffect(() => {
         <div className={styles.designGrid}>
           {filteredDesign.map(p => <ProjectCard key={p._id} project={p} type="design" />)}
         </div>
+        <Stickers section="design" />
       </section>
     </>
   );
