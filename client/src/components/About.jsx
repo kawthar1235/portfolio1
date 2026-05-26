@@ -50,7 +50,7 @@ export default function About() {
 
         <div className={styles.badge}>
           <div className={styles.badgeBig}>Available</div>
-          <div className={styles.badgeSm}>for internships & freelance</div>
+          <div className={styles.badgeSm}>for freelance</div>
         </div>
       </div>
 
