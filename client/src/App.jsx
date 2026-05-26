@@ -5,7 +5,6 @@ import Home from "./pages/Home";
 import ProjectsPage from "./pages/ProjectsPage";
 import NotFound from "./pages/NotFound";
 import AdminDashboard from "./components/AdminDashboard";
-import FloatingStickers from "./components/FloatingStickers";
 
 function MainLayout() {
   return (
