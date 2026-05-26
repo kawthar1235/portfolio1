@@ -2,17 +2,38 @@ import { useEffect, useRef } from 'react';
 import styles from './About.module.css';
 import Stickers from './Stickers';
 
-const TAGS = [
-  'React',
-  'JavaScript',
-  'HTML',
-  'CSS',
-  'Python',
-  'Java',
-  'SQL',
-  'Figma',
-  'UI/UX',
-  'GitHub'
+const SKILLS = [
+  {
+    title: 'Frontend',
+    items: ['React', 'JavaScript', 'HTML', 'CSS']
+  },
+
+  {
+    title: 'Backend',
+    items: ['Node.js', 'MongoDB', 'SQL', 'Python', 'Java']
+  },
+
+  {
+    title: 'Design',
+    items: [
+      'UI/UX',
+      'Figma',
+      'Illustrator',
+      'Procreate',
+      'Digital Design',
+      'Affinity Designer'
+    ]
+  },
+
+  {
+    title: 'Creative',
+    items: ['Video Editing']
+  },
+
+  {
+    title: 'Tools',
+    items: ['GitHub']
+  }
 ];
 
 export default function About() {
