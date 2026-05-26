@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import styles from './About.module.css';
 import Stickers from './Stickers';
 
-const SKILLS = [
+const TAGS = [
   {
     title: 'Frontend',
     items: ['React', 'JavaScript', 'HTML', 'CSS']
