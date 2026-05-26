@@ -55,7 +55,7 @@ export default function About() {
         </h2>
 
         <p className={styles.bio}>
-          I'm Nour — I started with design because I couldn't stop making things pretty,
+          I'm Kawthar Alkhawajah — I started with design because I couldn't stop making things pretty,
           then learned to code because I couldn't stop wondering how things worked.
           Now I do both, and honestly it's the best decision I've ever made.
         </p>
