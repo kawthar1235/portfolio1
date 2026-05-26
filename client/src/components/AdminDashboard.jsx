@@ -402,7 +402,9 @@ export default function AdminDashboard() {
 
         {view === "messages" && (
           <div style={s.msgGrid}>
-            {messages.length === 0 && <div style={s.empty}>No messages yet!</div>}
+            {messages.length === 0 && (
+              <div style={s.empty}>No messages yet!</div>
+            )}
 
             {messages.map((m) => (
               <div key={m._id} style={s.msgCard}>
@@ -641,7 +643,10 @@ export default function AdminDashboard() {
 
       {toast && <div style={s.toast}>{toast}</div>}
     </div>
-    const s = {
+  );
+}
+
+const s = {
   wrap: {
     display: "flex",
     minHeight: "100vh",
@@ -1021,5 +1026,3 @@ export default function AdminDashboard() {
     color: "#f87171",
   },
 };
-  );
-}
