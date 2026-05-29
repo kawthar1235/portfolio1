@@ -6,6 +6,16 @@ export default function ProjectCard({ project, type = 'design' }) {
   if (type === 'code') {
     return (
       <div className={`${styles.cCard}${project.featured ? ' ' + styles.featured : ''}`}>
+        {image && (
+  <div
+    className={styles.cImage}
+    style={{
+      backgroundImage: `url(${image})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+    }}
+  />
+)}
         <div className={styles.cTop}>
           {project.featured && <span className={styles.featuredBadge}>Featured</span>}
           <div className={styles.cIcon}>◈</div>
