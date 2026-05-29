@@ -14,7 +14,14 @@ const TAGS = [
   },
   {
     title: 'Design',
-    items: ['UI/UX', 'Figma', 'Illustrator', 'Procreate', 'Digital Design', 'Affinity Designer'],
+    items: [
+      'UI/UX',
+      'Figma',
+      'Illustrator',
+      'Procreate',
+      'Digital Design',
+      'Affinity Designer',
+    ],
   },
 ];
 
@@ -43,10 +50,10 @@ export default function About() {
     <section className={styles.about} id="about" ref={ref}>
       <div className={`${styles.photoWrap} fade-up`}>
         <img
-  src={profileImg}
-  alt="Kawthar"
-  className={styles.photo}
-/>
+          src={profileImg}
+          alt="Kawthar Alkhawajah"
+          className={styles.photo}
+        />
 
         <div className={styles.badge}>
           <div className={styles.badgeBig}>Available</div>
@@ -63,9 +70,10 @@ export default function About() {
         </h2>
 
         <p className={styles.bio}>
-          I'm Kawthar Alkhawajah — I started with design because I couldn't stop making things pretty,
-          then learned to code because I couldn't stop wondering how things worked.
-          Now I do both, and honestly it's the best decision I've ever made.
+          I'm Kawthar Alkhawajah — I started with design because I couldn't stop
+          making things pretty, then learned to code because I couldn't stop
+          wondering how things worked. Now I do both, and honestly it's the best
+          decision I've ever made.
         </p>
 
         <div className={styles.stats}>
@@ -96,9 +104,8 @@ export default function About() {
           className={styles.tags}
           style={{
             display: 'flex',
-            flexDirection: 'row',
+            gap: '3rem',
             flexWrap: 'wrap',
-            gap: '2rem',
             alignItems: 'flex-start',
           }}
         >
@@ -106,7 +113,7 @@ export default function About() {
             <div
               key={group.title}
               style={{
-                minWidth: '160px',
+                minWidth: '180px',
               }}
             >
               <div
@@ -116,6 +123,7 @@ export default function About() {
                   textTransform: 'uppercase',
                   opacity: 0.7,
                   marginBottom: '0.75rem',
+                  fontWeight: 600,
                 }}
               >
                 {group.title}
