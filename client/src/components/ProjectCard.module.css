@@ -129,10 +129,15 @@
 
 /* ── DESIGN CARD ── */
 .dCard {
+  width: 100%;
   border-radius: 1.6rem;
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.3s, box-shadow 0.3s;
+  background: var(--card-bg);
+  break-inside: avoid;
+  -webkit-column-break-inside: avoid;
+  margin-bottom: 1.5rem;
 }
 
 .dCard:hover {
@@ -141,16 +146,15 @@
 }
 
 .dThumb {
-  height: 220px;
   position: relative;
+  width: 100%;
   overflow: hidden;
   background: linear-gradient(145deg, var(--cerulean) 0%, var(--bg3) 100%);
 }
 
 .dImage {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
   display: block;
 }
 
