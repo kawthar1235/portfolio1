@@ -71,7 +71,7 @@ export default function ProjectCard({ project, type = 'design' }) {
         className={styles.dThumb}
         style={
           image
-            ? { backgroundImage: `url(${image})`, backgroundSize: 'cover', backgroundPosition: 'center' }
+            ? { backgroundImage: `url(${image})`, backgroundSize: 'contain', backgroundPosition: 'center' }
             : {}
         }
       >
