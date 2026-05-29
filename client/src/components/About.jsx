@@ -1,7 +1,9 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './About.module.css';
 import Stickers from './Stickers';
 import profileImg from '../profile.png';
+
+const API = 'https://portfolio-server-lbwm.onrender.com/api';
 
 const TAGS = [
   {
@@ -27,6 +29,7 @@ const TAGS = [
 
 export default function About() {
   const ref = useRef(null);
+  const [tools, setTools] = useState([]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -44,6 +47,13 @@ export default function About() {
       .forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    fetch(`${API}/toolkit`)
+      .then((res) => res.json())
+      .then((data) => setTools(Array.isArray(data) ? data : []))
+      .catch(() => setTools([]));
   }, []);
 
   return (
@@ -144,6 +154,32 @@ export default function About() {
               </div>
             </div>
           ))}
+        </div>
+
+        <div style={{ marginTop: '2.5rem' }}>
+          <div className="section-eyebrow">02 — My Creative Toolkit</div>
+          <h3 className="section-title" style={{ fontSize: '1.6rem' }}>
+            My <em>Creative Toolkit</em>
+          </h3>
+
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: '0.75rem',
+              marginTop: '1rem',
+            }}
+          >
+            {tools.length > 0 ? (
+              tools.map((tool) => (
+                <span key={tool._id} className="tag">
+                  {tool.name}
+                </span>
+              ))
+            ) : (
+              <span className="tag">Loading toolkit...</span>
+            )}
+          </div>
         </div>
 
         <div className={styles.actions}>
