@@ -1,34 +1,73 @@
-.codeSection   { padding: 6rem 4rem; background: var(--bg2); transition: background 0.35s; }
-.designSection { padding: 6rem 4rem; background: var(--bg);  transition: background 0.35s; }
+/* ───────────────────────────── */
+/* PROJECTS */
+/* ───────────────────────────── */
+
+.codeSection {
+  padding: 6rem 4rem;
+  background: var(--bg2);
+  transition: background 0.35s;
+}
+
+.designSection {
+  padding: 6rem 4rem;
+  background: var(--bg);
+  transition: background 0.35s;
+}
 
 .sectionHeader {
-  display: flex; justify-content: space-between; align-items: flex-end;
-  margin-bottom: 2.8rem; gap: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2.8rem;
+  gap: 2rem;
 }
 
-.filters { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.filters {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
 .ftab {
-  background: transparent; color: var(--text3);
+  background: transparent;
+  color: var(--text3);
   border: 1px solid var(--border);
-  padding: 0.35rem 1rem; border-radius: 2rem;
-  font-family: 'DM Sans', sans-serif; font-size: 0.72rem; letter-spacing: 0.08em;
-  cursor: pointer; transition: all 0.2s;
+  padding: 0.35rem 1rem;
+  border-radius: 2rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.2s;
 }
-.ftab.active, .ftab:hover { background: var(--cerulean); color: #fff; border-color: var(--cerulean); }
 
-.codeGrid   { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
+.ftab.active,
+.ftab:hover {
+  background: var(--cerulean);
+  color: #fff;
+  border-color: var(--cerulean);
+}
+
+/* ── CODE GRID ── */
+
 .codeGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.4rem;
 }
 
+/* ── DESIGN GRID (Pinterest Style) ── */
+
 .designGrid {
   column-count: 3;
-  column-gap: 1.4rem;
+  column-gap: 1.5rem;
 }
 
-@media (max-width: 1024px) {
+/* ───────────────────────────── */
+/* RESPONSIVE */
+/* ───────────────────────────── */
+
+@media (max-width: 1100px) {
   .codeGrid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -38,8 +77,9 @@
   }
 }
 
-@media (max-width: 640px) {
-  .codeSection, .designSection {
+@media (max-width: 700px) {
+  .codeSection,
+  .designSection {
     padding: 4rem 1.5rem;
   }
 
@@ -52,20 +92,7 @@
     grid-template-columns: 1fr;
   }
 
- .designGrid {
-  column-count: 3;
-  column-gap: 1.5rem;
-}
-
-@media (max-width: 1100px) {
-  .designGrid {
-    column-count: 2;
-  }
-}
-
-@media (max-width: 700px) {
   .designGrid {
     column-count: 1;
   }
-}
 }
