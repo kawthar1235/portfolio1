@@ -33,13 +33,14 @@
   display: flex; justify-content: space-between; align-items: center;
 }
 .cImage{
-  width:80%;
-  height:180px;
-  margin:0 auto 1rem;
-  border-radius:18px;
-  background-repeat:no-repeat;
-  background-size:contain;
-  background-position:center;
+  width: 100%;
+  height: 190px;
+  border-radius: 18px;
+  margin: 0 0 1rem 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  overflow: hidden;
 }
 .stackPills { display: flex; gap: 0.4rem; flex-wrap: wrap; }
 .spill {
