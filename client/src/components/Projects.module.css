@@ -17,13 +17,42 @@
 .ftab.active, .ftab:hover { background: var(--cerulean); color: #fff; border-color: var(--cerulean); }
 
 .codeGrid   { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
-.designGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
+.codeGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.4rem;
+}
+
+.designGrid {
+  column-count: 3;
+  column-gap: 1.4rem;
+}
 
 @media (max-width: 1024px) {
-  .codeGrid, .designGrid { grid-template-columns: repeat(2, 1fr); }
+  .codeGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .designGrid {
+    column-count: 2;
+  }
 }
+
 @media (max-width: 640px) {
-  .codeSection, .designSection { padding: 4rem 1.5rem; }
-  .sectionHeader { flex-direction: column; align-items: flex-start; }
-  .codeGrid, .designGrid { grid-template-columns: 1fr; }
+  .codeSection, .designSection {
+    padding: 4rem 1.5rem;
+  }
+
+  .sectionHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .codeGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .designGrid {
+    column-count: 1;
+  }
 }
