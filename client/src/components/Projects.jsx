@@ -9,12 +9,62 @@ const CODE_FILTERS = ['All', 'Web', 'App', 'Tools'];
 
 // Fallback data shown while API loads or if API is unavailable
 const FALLBACK_CODE = [
-  { _id: 'c1', title: 'Palettify', description: 'Generates accessible color palettes from any image.', techStack: ['React', 'Node.js', 'Canvas API'], category: 'web', liveUrl: '#', githubUrl: '#', featured: true },
-  { _id: 'c2', title: 'Moodboard AI', description: 'Enter a vibe, get a curated moodboard of images, colors, and fonts.', techStack: ['Python', 'FastAPI', 'OpenAI'], category: 'app', liveUrl: '#', githubUrl: '#' },
-  { _id: 'c3', title: 'FontPair CLI', description: 'Terminal tool that suggests font pairings based on mood keywords.', techStack: ['Python', 'Click'], category: 'tool', githubUrl: '#' },
-  { _id: 'c4', title: 'Portfolio v1', description: 'First portfolio site — vanilla HTML, CSS and JS.', techStack: ['HTML', 'CSS', 'JS'], category: 'web', liveUrl: '#', githubUrl: '#' },
-  { _id: 'c5', title: 'Readme Generator', description: 'Auto-generates a clean README from your code structure.', techStack: ['Python', 'Jinja2'], category: 'tool', githubUrl: '#' },
-  { _id: 'c6', title: 'Daily UI Logger', description: 'Tracks Daily UI challenge submissions with notes and ratings.', techStack: ['Next.js', 'Supabase'], category: 'app', liveUrl: '#', githubUrl: '#' },
+  {
+    _id: 'c1',
+    title: 'Palettify',
+    description: 'Generates accessible color palettes from any image.',
+    techStack: ['React', 'Node.js', 'Canvas API'],
+    category: 'web',
+    liveUrl: '#',
+    githubUrl: '#',
+    featured: true,
+  },
+  {
+    _id: 'c2',
+    title: 'Moodboard AI',
+    description:
+      'Enter a vibe, get a curated moodboard of images, colors, and fonts.',
+    techStack: ['Python', 'FastAPI', 'OpenAI'],
+    category: 'app',
+    liveUrl: '#',
+    githubUrl: '#',
+  },
+  {
+    _id: 'c3',
+    title: 'FontPair CLI',
+    description:
+      'Terminal tool that suggests font pairings based on mood keywords.',
+    techStack: ['Python', 'Click'],
+    category: 'tool',
+    githubUrl: '#',
+  },
+  {
+    _id: 'c4',
+    title: 'Portfolio v1',
+    description: 'First portfolio site — vanilla HTML, CSS and JS.',
+    techStack: ['HTML', 'CSS', 'JS'],
+    category: 'web',
+    liveUrl: '#',
+    githubUrl: '#',
+  },
+  {
+    _id: 'c5',
+    title: 'Readme Generator',
+    description: 'Auto-generates a clean README from your code structure.',
+    techStack: ['Python', 'Jinja2'],
+    category: 'tool',
+    githubUrl: '#',
+  },
+  {
+    _id: 'c6',
+    title: 'Daily UI Logger',
+    description:
+      'Tracks Daily UI challenge submissions with notes and ratings.',
+    techStack: ['Next.js', 'Supabase'],
+    category: 'app',
+    liveUrl: '#',
+    githubUrl: '#',
+  },
 ];
 
 const FALLBACK_DESIGN = [
@@ -134,27 +184,9 @@ export default function Projects() {
           </div>
         </div>
 
-        <div
-          className={styles.designGrid}
-          style={{
-            display: 'block',
-            columnWidth: '280px',
-            columnGap: '1.5rem',
-          }}
-        >
+        <div className={styles.designGrid}>
           {filteredDesign.map((p) => (
-            <div
-              key={p._id}
-              style={{
-                breakInside: 'avoid',
-                WebkitColumnBreakInside: 'avoid',
-                marginBottom: '1.5rem',
-                display: 'inline-block',
-                width: '100%',
-              }}
-            >
-              <ProjectCard project={p} type="design" />
-            </div>
+            <ProjectCard key={p._id} project={p} type="design" />
           ))}
         </div>
 
