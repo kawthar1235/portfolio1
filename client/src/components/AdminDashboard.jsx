@@ -41,6 +41,8 @@ export default function AdminDashboard() {
   const [view, setView] = useState("projects");
   const [projects, setProjects] = useState([]);
   const [messages, setMessages] = useState([]);
+  const [toolkit, setToolkit] = useState([]);
+  const [toolName, setToolName] = useState("");
   const [modal, setModal] = useState(null);
   const [form, setForm] = useState(EMPTY_PROJECT);
   const [editId, setEditId] = useState(null);
@@ -79,6 +81,7 @@ export default function AdminDashboard() {
     if (!token) return;
     api("/projects").then(setProjects).catch(console.error);
     api("/admin/messages").then(setMessages).catch(console.error);
+    api("/toolkit").then(setToolkit).catch(console.error);
   }, [token]);
 
   const handleImageChange = (e) => {
@@ -186,6 +189,31 @@ export default function AdminDashboard() {
     }
   };
 
+  const addToolkitItem = async (e) => {
+    e.preventDefault();
+    if (!toolName.trim()) return;
+
+    try {
+      const created = await api("/toolkit", "POST", { name: toolName });
+      setToolkit((prev) => [created, ...prev]);
+      setToolName("");
+      showToast("✅ Tool added!");
+    } catch (err) {
+      showToast("❌ " + (err.message || "Error"));
+    }
+  };
+
+  const deleteToolkitItem = async (id) => {
+    if (!confirm("Delete this tool?")) return;
+    try {
+      await api(`/toolkit/${id}`, "DELETE");
+      setToolkit((prev) => prev.filter((t) => t._id !== id));
+      showToast("🗑️ Tool deleted!");
+    } catch {
+      showToast("❌ Failed to delete");
+    }
+  };
+
   const filtered =
     filter === "all" ? projects : projects.filter((p) => p.type === filter);
 
@@ -245,6 +273,7 @@ export default function AdminDashboard() {
           {[
             ["projects", "◈ Projects"],
             ["messages", "✉ Messages"],
+            ["toolkit", "✦ Toolkit"],
           ].map(([v, l]) => (
             <button
               key={v}
@@ -268,13 +297,19 @@ export default function AdminDashboard() {
         <div style={s.header}>
           <div>
             <div style={s.headerTitle}>
-              {view === "projects" ? "Projects" : "Messages"}
+              {view === "projects"
+                ? "Projects"
+                : view === "messages"
+                  ? "Messages"
+                  : "Toolkit"}
             </div>
 
             <div style={s.headerSub}>
               {view === "projects"
                 ? `${projects.length} total`
-                : `${messages.length} messages`}
+                : view === "messages"
+                  ? `${messages.length} messages`
+                  : `${toolkit.length} tools`}
             </div>
           </div>
 
@@ -413,7 +448,10 @@ export default function AdminDashboard() {
                     <div style={s.msgName}>{m.name}</div>
                     <div style={s.msgEmail}>{m.email}</div>
                   </div>
-                  <button style={s.btnDelete} onClick={() => deleteMessage(m._id)}>
+                  <button
+                    style={s.btnDelete}
+                    onClick={() => deleteMessage(m._id)}
+                  >
                     Delete
                   </button>
                 </div>
@@ -422,6 +460,44 @@ export default function AdminDashboard() {
                 <div style={s.msgBody}>{m.message}</div>
                 <div style={s.msgDate}>
                   {new Date(m.createdAt).toLocaleDateString()}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {view === "toolkit" && (
+          <div style={s.msgGrid}>
+            <div style={s.msgCard}>
+              <form onSubmit={addToolkitItem} style={s.toolForm}>
+                <input
+                  style={s.input}
+                  placeholder="Add tool like Figma"
+                  value={toolName}
+                  onChange={(e) => setToolName(e.target.value)}
+                />
+                <button style={s.btnPrimary} type="submit">
+                  + Add Tool
+                </button>
+              </form>
+            </div>
+
+            {toolkit.length === 0 && (
+              <div style={s.empty}>No tools yet — add your creative toolkit!</div>
+            )}
+
+            {toolkit.map((t) => (
+              <div key={t._id} style={s.msgCard}>
+                <div style={s.msgTop}>
+                  <div>
+                    <div style={s.msgName}>{t.name}</div>
+                  </div>
+                  <button
+                    style={s.btnDelete}
+                    onClick={() => deleteToolkitItem(t._id)}
+                  >
+                    Delete
+                  </button>
                 </div>
               </div>
             ))}
@@ -554,7 +630,11 @@ export default function AdminDashboard() {
                 <div style={s.imageUploadWrap}>
                   {imagePreview && (
                     <div style={s.imagePreviewWrap}>
-                      <img src={imagePreview} alt="preview" style={s.imagePreview} />
+                      <img
+                        src={imagePreview}
+                        alt="preview"
+                        style={s.imagePreview}
+                      />
                       <button
                         type="button"
                         style={s.removeImg}
@@ -974,6 +1054,12 @@ const s = {
     borderRadius: "0.5rem",
     fontSize: "0.72rem",
     cursor: "pointer",
+  },
+  toolForm: {
+    display: "flex",
+    gap: "0.75rem",
+    alignItems: "center",
+    flexWrap: "wrap",
   },
   toast: {
     position: "fixed",
