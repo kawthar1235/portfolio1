@@ -67,15 +67,18 @@ export default function ProjectCard({ project, type = 'design' }) {
 
   return (
     <div className={styles.dCard}>
-      <div
-        className={styles.dThumb}
-        style={
-          image
-            ? { backgroundImage: `url(${image})`, backgroundSize: 'contain', backgroundPosition: 'center' }
-            : {}
-        }
-      >
-        {!image && <div className={styles.mockScreen} />}
+      <div className={styles.dThumb}>
+        {image ? (
+          <img
+            src={image}
+            alt={title}
+            className={styles.dImage}
+            loading="lazy"
+          />
+        ) : (
+          <div className={styles.mockScreen} />
+        )}
+
         <div className={styles.hoverOverlay}>
           <span className={styles.hoverBtn}>View Project →</span>
         </div>
