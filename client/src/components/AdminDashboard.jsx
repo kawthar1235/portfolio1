@@ -247,7 +247,7 @@ export default function AdminDashboard() {
 
   if (!token) {
     return (
-      <div style={s.loginWrap}>
+        <div style={s.wrap} className="admin-page">
         <div style={s.loginCard}>
           <div style={s.loginLogo}>
             kawthar
