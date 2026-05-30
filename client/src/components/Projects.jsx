@@ -7,77 +7,9 @@ import Stickers from './Stickers';
 const DESIGN_FILTERS = ['All', 'Branding', 'UI', 'Illustration'];
 const CODE_FILTERS = ['All', 'Web', 'App', 'Tools'];
 
-// Fallback data shown while API loads or if API is unavailable
-const FALLBACK_CODE = [
-  {
-    _id: 'c1',
-    title: 'Palettify',
-    description: 'Generates accessible color palettes from any image.',
-    techStack: ['React', 'Node.js', 'Canvas API'],
-    category: 'web',
-    liveUrl: '#',
-    githubUrl: '#',
-    featured: true,
-  },
-  {
-    _id: 'c2',
-    title: 'Moodboard AI',
-    description:
-      'Enter a vibe, get a curated moodboard of images, colors, and fonts.',
-    techStack: ['Python', 'FastAPI', 'OpenAI'],
-    category: 'app',
-    liveUrl: '#',
-    githubUrl: '#',
-  },
-  {
-    _id: 'c3',
-    title: 'FontPair CLI',
-    description:
-      'Terminal tool that suggests font pairings based on mood keywords.',
-    techStack: ['Python', 'Click'],
-    category: 'tool',
-    githubUrl: '#',
-  },
-  {
-    _id: 'c4',
-    title: 'Portfolio v1',
-    description: 'First portfolio site — vanilla HTML, CSS and JS.',
-    techStack: ['HTML', 'CSS', 'JS'],
-    category: 'web',
-    liveUrl: '#',
-    githubUrl: '#',
-  },
-  {
-    _id: 'c5',
-    title: 'Readme Generator',
-    description: 'Auto-generates a clean README from your code structure.',
-    techStack: ['Python', 'Jinja2'],
-    category: 'tool',
-    githubUrl: '#',
-  },
-  {
-    _id: 'c6',
-    title: 'Daily UI Logger',
-    description:
-      'Tracks Daily UI challenge submissions with notes and ratings.',
-    techStack: ['Next.js', 'Supabase'],
-    category: 'app',
-    liveUrl: '#',
-    githubUrl: '#',
-  },
-];
-
-const FALLBACK_DESIGN = [
-  { _id: 'd1', title: 'Bloom — Skincare Rebrand', category: 'Branding', year: '2025' },
-  { _id: 'd2', title: 'Cerise Wellness App', category: 'UI', year: '2024' },
-  { _id: 'd3', title: 'Douceur Poster Series', category: 'Illustration', year: '2024' },
-  { _id: 'd4', title: 'Velours Tea Collection', category: 'Branding', year: '2024' },
-  { _id: 'd5', title: 'Lumière Editorial Website', category: 'UI', year: '2023' },
-];
-
 export default function Projects() {
-  const [codeProjects, setCodeProjects] = useState(FALLBACK_CODE);
-  const [designProjects, setDesignProjects] = useState(FALLBACK_DESIGN);
+  const [codeProjects, setCodeProjects] = useState([]);
+  const [designProjects, setDesignProjects] = useState([]);
   const [codeFilter, setCodeFilter] = useState('All');
   const [designFilter, setDesignFilter] = useState('All');
 
@@ -86,8 +18,8 @@ export default function Projects() {
       .then(({ data }) => {
         const code = data.filter((p) => p.type === 'code');
         const design = data.filter((p) => p.type === 'design');
-        setCodeProjects(code.length ? code : []);
-        setDesignProjects(design.length ? design : []);
+        setCodeProjects(code);
+        setDesignProjects(design);
       })
       .catch(() => {
         setCodeProjects([]);
