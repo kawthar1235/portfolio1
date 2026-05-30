@@ -52,9 +52,6 @@ export default function ProjectCard({ project, type = 'design' }) {
         ) : (
           <div className={styles.mockScreen} />
         )}
-        <div className={styles.hoverOverlay}>
-          <span className={styles.hoverBtn}>{t.projects.viewProject}</span>
-        </div>
       </div>
       <div className={styles.dInfo}>
         <div className={styles.dTag}>{category}</div>
