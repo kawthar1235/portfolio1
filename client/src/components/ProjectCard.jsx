@@ -36,8 +36,6 @@ export default function ProjectCard({ project, type = 'design' }) {
               <span className={styles.featuredBadge}>Featured</span>
             )}
 
-            <div className={styles.cIcon}>◈</div>
-
             <h3 className={styles.cTitle}>{title}</h3>
 
             <p className={styles.cDesc}>{description}</p>
