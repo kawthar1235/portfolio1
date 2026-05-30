@@ -7,6 +7,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'ArabicFont';
+  src: url('https://res.cloudinary.com/dljbum6et/raw/upload/v1780157460/fontt_voul5z.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ── RTL Global Styles ── */
 [dir="rtl"],
 [dir="rtl"] * {
