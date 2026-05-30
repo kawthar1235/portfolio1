@@ -249,6 +249,7 @@ label,
 [dir="rtl"] .sdiv-pill,
 [dir="rtl"] .marquee-item {
   font-family: 'ArabicFont', sans-serif !important;
+  font-size: 2.0em !important;
 }
 
 /* ── ARABIC BODY & UI — ArabicFont2 ── */
