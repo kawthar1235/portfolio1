@@ -1,11 +1,24 @@
 import styles from './ProjectCard.module.css';
 
 export default function ProjectCard({ project, type = 'design' }) {
-  const { title, category, year, description, techStack, liveUrl, githubUrl, image } = project;
+  const {
+    title,
+    category,
+    year,
+    description,
+    techStack,
+    liveUrl,
+    githubUrl,
+    image,
+  } = project;
 
   if (type === 'code') {
     return (
-      <div className={`${styles.cCard}${project.featured ? ' ' + styles.featured : ''}`}>
+      <div
+        className={`${styles.cCard}${
+          project.featured ? ' ' + styles.featured : ''
+        }`}
+      >
         <div className={styles.cTop}>
           {image && (
             <div
@@ -24,7 +37,9 @@ export default function ProjectCard({ project, type = 'design' }) {
             )}
 
             <div className={styles.cIcon}>◈</div>
+
             <h3 className={styles.cTitle}>{title}</h3>
+
             <p className={styles.cDesc}>{description}</p>
           </div>
         </div>
@@ -49,6 +64,7 @@ export default function ProjectCard({ project, type = 'design' }) {
                 Live →
               </a>
             )}
+
             {githubUrl && (
               <a
                 href={githubUrl}
@@ -78,15 +94,13 @@ export default function ProjectCard({ project, type = 'design' }) {
         ) : (
           <div className={styles.mockScreen} />
         )}
-
-        <div className={styles.hoverOverlay}>
-          <span className={styles.hoverBtn}>View Project →</span>
-        </div>
       </div>
 
       <div className={styles.dInfo}>
         <div className={styles.dTag}>{category}</div>
+
         <div className={styles.dTitle}>{title}</div>
+
         <div className={styles.dYear}>{year}</div>
       </div>
     </div>
