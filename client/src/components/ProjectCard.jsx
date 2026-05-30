@@ -37,7 +37,7 @@ export default function ProjectCard({ project, type = 'design' }) {
             )}
 
             <h3 className={styles.cTitle}>{title}</h3>
-
+            <div className={styles.cDivider}></div>
             <p className={styles.cDesc}>{description}</p>
           </div>
         </div>
