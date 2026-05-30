@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { useLang } from '../context/LanguageContext';
 import styles from './Hero.module.css';
 import Stickers from './Stickers';
 
@@ -8,6 +9,7 @@ const MARQUEE_ITEMS = [
 ];
 
 export default function Hero() {
+  const { t } = useLang();
   const heroRef = useRef(null);
 
   useEffect(() => {
@@ -26,45 +28,41 @@ export default function Hero() {
       <section className={styles.hero} ref={heroRef}>
         <div className={styles.blob1} />
         <div className={styles.blob2} />
-
         <div className={`${styles.left} fade-up`}>
-          <div className={styles.eyebrow}>Hi there, I'm Kawthar Alkhawajah</div>
+          <div className={styles.eyebrow}>{t.hero.greeting}</div>
           <h1 className={styles.heading}>
-            I design, I <em>code</em>,<br />
-            I make things<br />
-            <span className={styles.blush}>beautiful</span>
+            {t.hero.line1} <em>{t.hero.line2}</em>,<br />
+            {t.hero.line3}<br />
+            <span className={styles.blush}>{t.hero.line4}</span>
           </h1>
-          <p className={styles.bio}>
-            A creative who lives at the intersection of{' '}
-            <strong>design and code</strong>. I build things that look good
-            and work well — because why settle for just one?
-          </p>
+          <p className={styles.bio}>{t.hero.bio}</p>
           <div className={styles.actions}>
-            <a href="#about" className="btn-primary">About Me</a>
-            <a href="https://drive.google.com/file/d/10KEp84NphFAmx6q5I2okaAemH5UkKtHT/view?usp=sharing" className="btn-ghost" target="_blank" rel="kawtharferrer">Download Resume</a>
+            <a href="#about" className="btn-primary">{t.hero.aboutBtn}</a>
+            <a href="https://drive.google.com/file/d/10KEp84NphFAmx6q5I2okaAemH5UkKtHT/view?usp=sharing"
+              className="btn-ghost" target="_blank" rel="noreferrer">
+              {t.hero.resumeBtn}
+            </a>
           </div>
           <div className={styles.socials}>
-            <span>Find me</span>
+            <span>{t.hero.findMe}</span>
             {['Be','GH','Ig','Li'].map(s => (
               <a key={s} href="#" className={styles.sPill}>{s}</a>
             ))}
           </div>
         </div>
-
-      <div className={styles.right}>
+        <div className={styles.right}>
           <div className={styles.photoFrame}>Your Photo</div>
           <div className={`${styles.floatTag} ${styles.ft1}`}>
             <div className={styles.ftNum}>3+</div>
-            <div className={styles.ftLabel}>Years creating</div>
+            <div className={styles.ftLabel}>{t.hero.yearsLabel}</div>
           </div>
           <div className={`${styles.floatTag} ${styles.ft2}`}>
             <div className={styles.ftNum}>40+</div>
-            <div className={styles.ftLabel}>Projects done</div>
+            <div className={styles.ftLabel}>{t.hero.projectsLabel}</div>
           </div>
         </div>
         <Stickers section="hero" />
       </section>
-      {/* Marquee */}
       <div className="marquee-bar">
         <div className="marquee-track">
           {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
