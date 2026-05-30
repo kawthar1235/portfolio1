@@ -1,4 +1,4 @@
-import Skill from "../models/Skill.js";
+import Skill from '../models/Skill.js';
 
 export const getSkills = async (req, res) => {
   const skills = await Skill.find().sort({ createdAt: -1 });
@@ -9,15 +9,10 @@ export const addSkill = async (req, res) => {
   const { icon, name, list } = req.body;
 
   if (!icon || !name || !list) {
-    return res.status(400).json({ message: "Icon, name, and list are required" });
+    return res.status(400).json({ message: 'Icon, name, and list are required' });
   }
 
-  const skill = await Skill.create({
-    icon: icon.trim(),
-    name: name.trim(),
-    list: list.trim(),
-  });
-
+  const skill = await Skill.create({ icon, name, list });
   res.status(201).json(skill);
 };
 
