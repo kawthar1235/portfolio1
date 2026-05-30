@@ -204,3 +204,71 @@ h1, h2, h3, h4 {
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+
+/* ── HEADINGS — Cormorant Garamond ── */
+h1, h2, h3, h4, h5, h6,
+.section-title,
+.sec-title,
+.sdiv-pill,
+.marquee-item {
+  font-family: 'Cormorant Garamond', serif;
+}
+
+/* ── BODY & UI — DM Sans ── */
+body,
+p,
+span,
+a,
+button,
+input,
+textarea,
+select,
+label,
+.section-eyebrow,
+.sec-eyebrow,
+.section-sub,
+.sec-sub,
+.tag,
+.btn-primary,
+.btn-ghost,
+.ftab,
+.spill {
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* ── ARABIC HEADINGS — ArabicFont ── */
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3,
+[dir="rtl"] h4,
+[dir="rtl"] h5,
+[dir="rtl"] h6,
+[dir="rtl"] .section-title,
+[dir="rtl"] .sec-title,
+[dir="rtl"] .sdiv-pill,
+[dir="rtl"] .marquee-item {
+  font-family: 'ArabicFont', sans-serif !important;
+}
+
+/* ── ARABIC BODY & UI — ArabicFont2 ── */
+[dir="rtl"] body,
+[dir="rtl"] p,
+[dir="rtl"] span,
+[dir="rtl"] a,
+[dir="rtl"] button,
+[dir="rtl"] input,
+[dir="rtl"] textarea,
+[dir="rtl"] select,
+[dir="rtl"] label,
+[dir="rtl"] .section-eyebrow,
+[dir="rtl"] .sec-eyebrow,
+[dir="rtl"] .section-sub,
+[dir="rtl"] .sec-sub,
+[dir="rtl"] .tag,
+[dir="rtl"] .btn-primary,
+[dir="rtl"] .btn-ghost,
+[dir="rtl"] .ftab,
+[dir="rtl"] .spill {
+  font-family: 'ArabicFont2', sans-serif !important;
+}
