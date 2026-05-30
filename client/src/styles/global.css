@@ -238,12 +238,10 @@ label,
 }
 
 /* ── ARABIC HEADINGS — ArabicFont ── */
-[dir="rtl"] h1:not(.admin-page *),
-[dir="rtl"] h2:not(.admin-page *),
-[dir="rtl"] h3:not(.admin-page *),
-[dir="rtl"] h4:not(.admin-page *),
-[dir="rtl"] h5:not(.admin-page *),
-[dir="rtl"] h6:not(.admin-page *),
+[dir="rtl"] h1:not(.admin-page h1),
+[dir="rtl"] h2:not(.admin-page h2),
+[dir="rtl"] h3:not(.admin-page h3),
+[dir="rtl"] h4:not(.admin-page h4),
 [dir="rtl"] .section-title,
 [dir="rtl"] .sec-title,
 [dir="rtl"] .sdiv-pill,
@@ -252,15 +250,14 @@ label,
 }
 
 /* ── ARABIC BODY & UI — ArabicFont2 ── */
-[dir="rtl"] body:not(.admin-page),
-[dir="rtl"] p:not(.admin-page *),
-[dir="rtl"] span:not(.admin-page *),
-[dir="rtl"] a:not(.admin-page *),
-[dir="rtl"] button:not(.admin-page *),
-[dir="rtl"] input:not(.admin-page *),
-[dir="rtl"] textarea:not(.admin-page *),
-[dir="rtl"] select:not(.admin-page *),
-[dir="rtl"] label:not(.admin-page *),
+[dir="rtl"] p:not(.admin-page p),
+[dir="rtl"] span:not(.admin-page span),
+[dir="rtl"] a:not(.admin-page a),
+[dir="rtl"] button:not(.admin-page button),
+[dir="rtl"] input:not(.admin-page input),
+[dir="rtl"] textarea:not(.admin-page textarea),
+[dir="rtl"] select:not(.admin-page select),
+[dir="rtl"] label:not(.admin-page label),
 [dir="rtl"] .section-eyebrow,
 [dir="rtl"] .sec-eyebrow,
 [dir="rtl"] .section-sub,
@@ -271,5 +268,19 @@ label,
 [dir="rtl"] .ftab,
 [dir="rtl"] .spill {
   font-family: 'ArabicFont2', sans-serif !important;
-  font-size: 1.1em !important;
+  font-size: 1.15em !important;
+}
+
+/* ── ADMIN — keep original fonts always ── */
+.admin-page,
+.admin-page * {
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: revert !important;
+  direction: ltr !important;
+  text-align: left !important;
+}
+.admin-page h1,
+.admin-page h2,
+.admin-page h3 {
+  font-family: 'Cormorant Garamond', serif !important;
 }
