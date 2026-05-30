@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 const API = "https://portfolio-server-lbwm.onrender.com/api";
 const CLOUD_NAME = "dljbum6et";
 const UPLOAD_PRESET = "portfolio_upload";
+const SKILL_ICONS = ["✦", "◈", "◇", "✧", "◉", "⬡", "◆", "●", "★", "➜"];
 
 const api = async (path, method = "GET", body) => {
   const token =
@@ -99,12 +100,15 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     if (!token) return;
+
     api("/projects")
       .then((data) => setProjects(Array.isArray(data) ? data : []))
       .catch(console.error);
+
     api("/admin/messages")
       .then((data) => setMessages(Array.isArray(data) ? data : []))
       .catch(console.error);
+
     api("/skills")
       .then((data) => setSkills(Array.isArray(data) ? data : []))
       .catch(console.error);
@@ -497,15 +501,21 @@ export default function AdminDashboard() {
               <form onSubmit={addSkill} style={s.formGrid}>
                 <div style={s.formGroup}>
                   <label style={s.label}>Icon *</label>
-                  <input
+                  <select
                     style={s.input}
-                    placeholder="✦"
                     value={skillForm.icon}
                     onChange={(e) =>
                       setSkillForm((f) => ({ ...f, icon: e.target.value }))
                     }
                     required
-                  />
+                  >
+                    <option value="">Choose icon</option>
+                    {SKILL_ICONS.map((icon) => (
+                      <option key={icon} value={icon}>
+                        {icon}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 <div style={s.formGroup}>
