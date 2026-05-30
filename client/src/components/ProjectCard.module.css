@@ -80,6 +80,13 @@
   margin-bottom: 0.15rem;
 }
 
+.cDivider {
+  width: 100%;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.08);
+  margin: 0.6rem 0 0.8rem;
+}
+
 .cDesc {
   font-size: 0.8rem;
   line-height: 1.75;
