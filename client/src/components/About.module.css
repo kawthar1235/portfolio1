@@ -6,7 +6,10 @@
   align-items: center;
   background: var(--bg);
 }
-.photoWrap { position: relative; }
+.photoWrap {
+  position: relative;
+  transform: translateY(-40px);
+}
 .photo {
   width: 100%;
   height: 420px;
@@ -15,9 +18,7 @@
   animation: morph 8s ease-in-out infinite;
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
   border: 4px solid rgba(255, 255, 255, 0.15);
-  margin-top: -60px;
 }
-
 @keyframes morph {
   0%   { border-radius: 60% 40% 55% 45% / 50% 55% 45% 50%; }
   33%  { border-radius: 45% 55% 40% 60% / 55% 45% 55% 45%; }
@@ -32,10 +33,8 @@
 }
 .badgeBig { font-size: 2rem; font-weight: 600; line-height: 1; }
 .badgeSm  { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.65; margin-top: 0.2rem; }
-
 .bio   { font-size: 0.9rem; line-height: 1.85; color: var(--text2); margin: 1rem 0; }
 .extra { font-size: 0.88rem; line-height: 1.85; color: var(--text2); }
-
 .stats {
   display: flex; gap: 2.5rem; margin: 1.8rem 0;
   padding: 1.4rem 1.8rem;
@@ -43,7 +42,6 @@
 }
 .statNum  { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 600; color: var(--text); line-height: 1; }
 .statLabel{ font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-top: 0.15rem; }
-
 .quote {
   background: var(--quote-bg);
   border-left: 3px solid var(--cerulean);
@@ -53,11 +51,10 @@
   font-style: italic; margin: 1.4rem 0;
   font-family: 'Cormorant Garamond', serif; font-size: 1rem;
 }
-
 .tags { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-top: 1.5rem; }
 .actions { display: flex; gap: 0.9rem; margin-top: 2rem; }
-
 @media (max-width: 900px) {
   .about { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 3rem; }
   .photo { height: 280px; }
+  .photoWrap { transform: translateY(0); }
 }
