@@ -17,8 +17,20 @@ const api = async (path, method = "GET", body) => {
     ...(body ? { body: JSON.stringify(body) } : {}),
   });
 
-  if (!res.ok) throw await res.json();
-  return res.json();
+  const text = await res.text();
+  let data = null;
+
+  try {
+    data = text ? JSON.parse(text) : null;
+  } catch {
+    data = text;
+  }
+
+  if (!res.ok) {
+    throw new Error((data && data.message) || `Request failed (${res.status})`);
+  }
+
+  return data;
 };
 
 const EMPTY_PROJECT = {
@@ -34,15 +46,23 @@ const EMPTY_PROJECT = {
   image: "",
 };
 
+const EMPTY_SKILL = {
+  icon: "",
+  name: "",
+  list: "",
+};
+
 export default function AdminDashboard() {
   const [token, setToken] = useState(
-    typeof window !== "undefined" ? localStorage.getItem("adminToken") || "" : ""
+    typeof window !== "undefined"
+      ? localStorage.getItem("adminToken") || ""
+      : ""
   );
   const [view, setView] = useState("projects");
   const [projects, setProjects] = useState([]);
   const [messages, setMessages] = useState([]);
-  const [toolkit, setToolkit] = useState([]);
-  const [toolName, setToolName] = useState("");
+  const [skills, setSkills] = useState([]);
+  const [skillForm, setSkillForm] = useState(EMPTY_SKILL);
   const [modal, setModal] = useState(null);
   const [form, setForm] = useState(EMPTY_PROJECT);
   const [editId, setEditId] = useState(null);
@@ -79,9 +99,15 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     if (!token) return;
-    api("/projects").then(setProjects).catch(console.error);
-    api("/admin/messages").then(setMessages).catch(console.error);
-    api("/toolkit").then(setToolkit).catch(console.error);
+    api("/projects")
+      .then((data) => setProjects(Array.isArray(data) ? data : []))
+      .catch(console.error);
+    api("/admin/messages")
+      .then((data) => setMessages(Array.isArray(data) ? data : []))
+      .catch(console.error);
+    api("/skills")
+      .then((data) => setSkills(Array.isArray(data) ? data : []))
+      .catch(console.error);
   }, [token]);
 
   const handleImageChange = (e) => {
@@ -189,26 +215,24 @@ export default function AdminDashboard() {
     }
   };
 
-  const addToolkitItem = async (e) => {
+  const addSkill = async (e) => {
     e.preventDefault();
-    if (!toolName.trim()) return;
-
     try {
-      const created = await api("/toolkit", "POST", { name: toolName });
-      setToolkit((prev) => [created, ...prev]);
-      setToolName("");
-      showToast("✅ Tool added!");
+      const created = await api("/skills", "POST", skillForm);
+      setSkills((prev) => [created, ...prev]);
+      setSkillForm(EMPTY_SKILL);
+      showToast("✅ Skill added!");
     } catch (err) {
       showToast("❌ " + (err.message || "Error"));
     }
   };
 
-  const deleteToolkitItem = async (id) => {
-    if (!confirm("Delete this tool?")) return;
+  const deleteSkill = async (id) => {
+    if (!confirm("Delete this skill?")) return;
     try {
-      await api(`/toolkit/${id}`, "DELETE");
-      setToolkit((prev) => prev.filter((t) => t._id !== id));
-      showToast("🗑️ Tool deleted!");
+      await api(`/skills/${id}`, "DELETE");
+      setSkills((prev) => prev.filter((s) => s._id !== id));
+      showToast("🗑️ Skill deleted!");
     } catch {
       showToast("❌ Failed to delete");
     }
@@ -273,7 +297,7 @@ export default function AdminDashboard() {
           {[
             ["projects", "◈ Projects"],
             ["messages", "✉ Messages"],
-            ["toolkit", "✦ Toolkit"],
+            ["skills", "✦ Skills"],
           ].map(([v, l]) => (
             <button
               key={v}
@@ -301,7 +325,7 @@ export default function AdminDashboard() {
                 ? "Projects"
                 : view === "messages"
                   ? "Messages"
-                  : "Toolkit"}
+                  : "Skills"}
             </div>
 
             <div style={s.headerSub}>
@@ -309,7 +333,7 @@ export default function AdminDashboard() {
                 ? `${projects.length} total`
                 : view === "messages"
                   ? `${messages.length} messages`
-                  : `${toolkit.length} tools`}
+                  : `${skills.length} skills`}
             </div>
           </div>
 
@@ -466,35 +490,74 @@ export default function AdminDashboard() {
           </div>
         )}
 
-        {view === "toolkit" && (
+        {view === "skills" && (
           <div style={s.msgGrid}>
             <div style={s.msgCard}>
-              <form onSubmit={addToolkitItem} style={s.toolForm}>
-                <input
-                  style={s.input}
-                  placeholder="Add tool like Figma"
-                  value={toolName}
-                  onChange={(e) => setToolName(e.target.value)}
-                />
-                <button style={s.btnPrimary} type="submit">
-                  + Add Tool
-                </button>
+              <div style={s.modalTitle}>Add Skill</div>
+              <form onSubmit={addSkill} style={s.formGrid}>
+                <div style={s.formGroup}>
+                  <label style={s.label}>Icon *</label>
+                  <input
+                    style={s.input}
+                    placeholder="✦"
+                    value={skillForm.icon}
+                    onChange={(e) =>
+                      setSkillForm((f) => ({ ...f, icon: e.target.value }))
+                    }
+                    required
+                  />
+                </div>
+
+                <div style={s.formGroup}>
+                  <label style={s.label}>Name *</label>
+                  <input
+                    style={s.input}
+                    placeholder="Visual Identity"
+                    value={skillForm.name}
+                    onChange={(e) =>
+                      setSkillForm((f) => ({ ...f, name: e.target.value }))
+                    }
+                    required
+                  />
+                </div>
+
+                <div style={{ ...s.formGroup, gridColumn: "1/-1" }}>
+                  <label style={s.label}>List *</label>
+                  <input
+                    style={s.input}
+                    placeholder="Logo design · Color systems · Typography"
+                    value={skillForm.list}
+                    onChange={(e) =>
+                      setSkillForm((f) => ({ ...f, list: e.target.value }))
+                    }
+                    required
+                  />
+                </div>
+
+                <div style={{ gridColumn: "1/-1" }}>
+                  <button type="submit" style={s.btnPrimary}>
+                    + Add Skill
+                  </button>
+                </div>
               </form>
             </div>
 
-            {toolkit.length === 0 && (
-              <div style={s.empty}>No tools yet — add your creative toolkit!</div>
+            {skills.length === 0 && (
+              <div style={s.empty}>No skills yet — add them from here!</div>
             )}
 
-            {toolkit.map((t) => (
-              <div key={t._id} style={s.msgCard}>
+            {skills.map((skill) => (
+              <div key={skill._id} style={s.msgCard}>
                 <div style={s.msgTop}>
                   <div>
-                    <div style={s.msgName}>{t.name}</div>
+                    <div style={s.msgName}>
+                      {skill.icon} {skill.name}
+                    </div>
+                    <div style={s.msgBody}>{skill.list}</div>
                   </div>
                   <button
                     style={s.btnDelete}
-                    onClick={() => deleteToolkitItem(t._id)}
+                    onClick={() => deleteSkill(skill._id)}
                   >
                     Delete
                   </button>
@@ -1054,12 +1117,6 @@ const s = {
     borderRadius: "0.5rem",
     fontSize: "0.72rem",
     cursor: "pointer",
-  },
-  toolForm: {
-    display: "flex",
-    gap: "0.75rem",
-    alignItems: "center",
-    flexWrap: "wrap",
   },
   toast: {
     position: "fixed",
