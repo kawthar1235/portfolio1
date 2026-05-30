@@ -14,18 +14,19 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(
-  cors({
-    origin: [
-      'http://localhost:5173',
-      'https://portfolio1-navy-mu.vercel.app',
-     ' https://kawthar-dev.vercel.app',
-    ],
-    credentials: true,
-  })
-);
+const corsOptions = {
+  origin: [
+    'http://localhost:5173',
+    'https://portfolio1-navy-mu.vercel.app',
+    'https://kawthar-dev.vercel.app',
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
 
-app.use(express.json());
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 // Routes
 app.use('/api/projects', projectRoutes);
