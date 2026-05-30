@@ -19,7 +19,7 @@ app.use(
     origin: [
       'http://localhost:5173',
       'https://portfolio1-navy-mu.vercel.app',
-     ' https://kawthar-dev.vercel.app/',
+     ' https://kawthar-dev.vercel.app',
     ],
     credentials: true,
   })
