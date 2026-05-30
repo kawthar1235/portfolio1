@@ -13,7 +13,6 @@ dotenv.config();
 
 const app = express();
 
-// Middleware
 const corsOptions = {
   origin: [
     'http://localhost:5173',
@@ -28,16 +27,18 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
 
-// Routes
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use('/api/projects', projectRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/skills', skillRoutes);
 
-// Health check
-app.get('/api/health', (_, res) => res.json({ status: 'ok' }));
+app.get('/api/health', (_, res) => {
+  res.json({ status: 'ok' });
+});
 
-// Error handler
 app.use(errorMiddleware);
 
 export default app;
