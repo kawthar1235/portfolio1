@@ -1,0 +1,131 @@
+/* ── RTL Global Styles ── */
+[dir="rtl"] {
+  font-family: 'Noto Sans Arabic', 'DM Sans', system-ui, sans-serif;
+}
+
+/* Navbar */
+[dir="rtl"] nav {
+  flex-direction: row-reverse;
+}
+[dir="rtl"] .nav-links {
+  flex-direction: row-reverse;
+}
+
+/* Hero */
+[dir="rtl"] .hero {
+  direction: rtl;
+}
+[dir="rtl"] .hero h1 {
+  text-align: right;
+}
+[dir="rtl"] .hero-bio {
+  text-align: right;
+}
+[dir="rtl"] .hero-actions {
+  flex-direction: row-reverse;
+}
+[dir="rtl"] .hero-socials {
+  flex-direction: row-reverse;
+}
+
+/* About */
+[dir="rtl"] .about-section {
+  direction: rtl;
+}
+[dir="rtl"] .about-text {
+  text-align: right;
+}
+[dir="rtl"] .tags-wrap {
+  flex-direction: row-reverse;
+}
+[dir="rtl"] .fun-fact {
+  border-left: none;
+  border-right: 3px solid var(--cerulean);
+  border-radius: 0.8rem 0 0 0.8rem;
+  text-align: right;
+}
+
+/* Sections */
+[dir="rtl"] .section-header {
+  flex-direction: row-reverse;
+}
+[dir="rtl"] .sec-eyebrow,
+[dir="rtl"] .section-eyebrow {
+  text-align: right;
+}
+[dir="rtl"] .sec-title,
+[dir="rtl"] .section-title {
+  text-align: right;
+}
+[dir="rtl"] .sec-sub,
+[dir="rtl"] .section-sub {
+  text-align: right;
+}
+
+/* Project cards */
+[dir="rtl"] .dinfo,
+[dir="rtl"] .winfo {
+  text-align: right;
+}
+[dir="rtl"] .ccard-footer {
+  flex-direction: row-reverse;
+}
+[dir="rtl"] .stack-pills {
+  flex-direction: row-reverse;
+}
+[dir="rtl"] .ccard-links {
+  flex-direction: row-reverse;
+}
+
+/* Contact */
+[dir="rtl"] .contact-section {
+  direction: rtl;
+}
+[dir="rtl"] .contact-title,
+[dir="rtl"] .contact-sub,
+[dir="rtl"] .contact-eyebrow {
+  text-align: right;
+}
+[dir="rtl"] .field label {
+  text-align: right;
+}
+[dir="rtl"] .field input,
+[dir="rtl"] .field textarea {
+  text-align: right;
+  direction: rtl;
+}
+[dir="rtl"] .row {
+  flex-direction: row-reverse;
+}
+
+/* Footer */
+[dir="rtl"] .footer-inner {
+  flex-direction: row-reverse;
+}
+[dir="rtl"] .footer-nav {
+  flex-direction: row-reverse;
+}
+[dir="rtl"] .footer-bottom {
+  flex-direction: row-reverse;
+}
+
+/* Dividers */
+[dir="rtl"] .sec-divider {
+  flex-direction: row-reverse;
+}
+
+/* Stats */
+[dir="rtl"] .about-stats {
+  flex-direction: row-reverse;
+}
+
+/* Skills grid text */
+[dir="rtl"] .skill-name,
+[dir="rtl"] .skill-list {
+  text-align: right;
+}
+
+/* Filters */
+[dir="rtl"] .filters {
+  flex-direction: row-reverse;
+}
