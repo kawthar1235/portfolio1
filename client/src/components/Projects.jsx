@@ -1,22 +1,24 @@
 import { useState, useEffect } from 'react';
+import { useLang } from '../context/LanguageContext';
 import { getProjects } from '../services/api';
 import ProjectCard from './ProjectCard';
 import styles from './Projects.module.css';
 import Stickers from './Stickers';
 
-const DESIGN_FILTERS = ['All', 'Branding', 'UI', 'Illustration'];
-const CODE_FILTERS = ['All', 'Web', 'App', 'Tools'];
-
 export default function Projects() {
-  const [codeProjects, setCodeProjects] = useState([]);
+  const { t } = useLang();
+  const [codeProjects,   setCodeProjects]   = useState([]);
   const [designProjects, setDesignProjects] = useState([]);
-  const [codeFilter, setCodeFilter] = useState('All');
-  const [designFilter, setDesignFilter] = useState('All');
+  const [codeFilter,     setCodeFilter]     = useState('all');
+  const [designFilter,   setDesignFilter]   = useState('all');
+
+  const CODE_FILTERS   = ['all','web','app','tool'];
+  const DESIGN_FILTERS = ['all','Branding','UI','Illustration'];
 
   useEffect(() => {
     getProjects()
       .then(({ data }) => {
-        const code = data.filter((p) => p.type === 'code');
+        const code   = data.filter((p) => p.type === 'code');
         const design = data.filter((p) => p.type === 'design');
         setCodeProjects(code);
         setDesignProjects(design);
@@ -27,41 +29,32 @@ export default function Projects() {
       });
   }, []);
 
-  const filteredCode =
-    codeFilter === 'All'
-      ? codeProjects
-      : codeProjects.filter(
-          (p) => p.category?.toLowerCase() === codeFilter.toLowerCase()
-        );
+  const filteredCode = codeFilter === 'all'
+    ? codeProjects
+    : codeProjects.filter(p => p.category?.toLowerCase() === codeFilter.toLowerCase());
 
-  const filteredDesign =
-    designFilter === 'All'
-      ? designProjects
-      : designProjects.filter(
-          (p) => p.category?.toLowerCase() === designFilter.toLowerCase()
-        );
+  const filteredDesign = designFilter === 'all'
+    ? designProjects
+    : designProjects.filter(p => p.category?.toLowerCase() === designFilter.toLowerCase());
 
   return (
     <>
       {/* ── 02 CODING ── */}
       <div className="sec-divider">
         <div className="sdiv-line" />
-        <div className="sdiv-pill">02 — coding projects ✦</div>
+        <div className="sdiv-pill">{t.projects.dividerCode}</div>
         <div className="sdiv-line" />
       </div>
 
-      <section className={styles.codeSection} id="code">
+      <section className={styles.codeSection} id="code" style={{position:'relative'}}>
         <div className={styles.sectionHeader}>
           <div>
-            <div className="section-eyebrow">◈ Built from scratch</div>
+            <div className="section-eyebrow">{t.projects.codeEyebrow}</div>
             <h2 className="section-title">
-              Coding <em>Projects</em>
+              {t.projects.codeTitle} <em>{t.projects.codeTitleEm}</em>
             </h2>
-            <p className="section-sub">
-              Apps, tools, and experiments — real things that actually run.
-            </p>
+            <p className="section-sub">{t.projects.codeSub}</p>
           </div>
-
           <div className={styles.filters}>
             {CODE_FILTERS.map((f) => (
               <button
@@ -69,40 +62,35 @@ export default function Projects() {
                 className={`${styles.ftab}${codeFilter === f ? ' ' + styles.active : ''}`}
                 onClick={() => setCodeFilter(f)}
               >
-                {f}
+                {t.projects.filters[f]}
               </button>
             ))}
           </div>
         </div>
-
         <div className={styles.codeGrid}>
           {filteredCode.map((p) => (
             <ProjectCard key={p._id} project={p} type="code" />
           ))}
         </div>
-
         <Stickers section="code" />
       </section>
 
       {/* ── 03 DESIGN ── */}
       <div className="sec-divider">
         <div className="sdiv-line" />
-        <div className="sdiv-pill">03 — design projects ✦</div>
+        <div className="sdiv-pill">{t.projects.dividerDesign}</div>
         <div className="sdiv-line" />
       </div>
 
-      <section className={styles.designSection} id="design">
+      <section className={styles.designSection} id="design" style={{position:'relative'}}>
         <div className={styles.sectionHeader}>
           <div>
-            <div className="section-eyebrow">✦ Creative Work</div>
+            <div className="section-eyebrow">{t.projects.designEyebrow}</div>
             <h2 className="section-title">
-              Design <em>Projects</em>
+              {t.projects.designTitle} <em>{t.projects.designTitleEm}</em>
             </h2>
-            <p className="section-sub">
-              Visual identities, interfaces, illustrations — things made to be felt.
-            </p>
+            <p className="section-sub">{t.projects.designSub}</p>
           </div>
-
           <div className={styles.filters}>
             {DESIGN_FILTERS.map((f) => (
               <button
@@ -110,18 +98,16 @@ export default function Projects() {
                 className={`${styles.ftab}${designFilter === f ? ' ' + styles.active : ''}`}
                 onClick={() => setDesignFilter(f)}
               >
-                {f}
+                {t.projects.filters[f] || f}
               </button>
             ))}
           </div>
         </div>
-
         <div className={styles.designGrid}>
           {filteredDesign.map((p) => (
             <ProjectCard key={p._id} project={p} type="design" />
           ))}
         </div>
-
         <Stickers section="design" />
       </section>
     </>
