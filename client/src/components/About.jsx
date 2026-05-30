@@ -65,13 +65,16 @@ export default function About() {
 
   return (
     <section className={styles.about} id="about" ref={ref}>
-      <div className={`${styles.photoWrap} fade-up`}>
+
+      <div
+        className={`${styles.photoWrap} fade-up`}
+        style={{ transform: 'translateY(-60px)' }}
+      >
         <img
           src={profileImg}
           alt="Kawthar Alkhawajah"
           className={styles.photo}
         />
-
         <div className={styles.badge}>
           <div className={styles.badgeBig}>{t.about.badgeTop}</div>
           <div className={styles.badgeSm}>{t.about.badgeSub}</div>
@@ -99,8 +102,8 @@ export default function About() {
         <div className={styles.stats}>
           {[
             ['30+', lang === 'ar' ? 'مشروع وتصميم منجز' : 'Projects & designs completed'],
-            ['5+', lang === 'ar' ? 'سنوات خبرة' : 'Years of experience'],
-            ['100%', lang === 'ar' ? 'شغف بالتعلم' : 'Passion for learning'],
+            ['5+',  lang === 'ar' ? 'سنوات خبرة'        : 'Years of experience'],
+            ['100%',lang === 'ar' ? 'شغف بالتعلم'       : 'Passion for learning'],
           ].map(([n, l]) => (
             <div key={l}>
               <div className={styles.statNum}>{n}</div>
@@ -144,7 +147,6 @@ export default function About() {
               >
                 {group.title}
               </div>
-
               <div
                 style={{
                   display: 'flex',
@@ -163,7 +165,7 @@ export default function About() {
         </div>
 
         <div className={styles.actions}>
-          <a
+          
             href="https://drive.google.com/file/d/10KEp84NphFAmx6q5I2okaAemH5UkKtHT/view?usp=sharing"
             className="btn-ghost"
             target="_blank"
@@ -171,7 +173,6 @@ export default function About() {
           >
             {t.about.cvBtn}
           </a>
-
           <a href="#contact" className="btn-ghost">
             {t.about.chatBtn}
           </a>
