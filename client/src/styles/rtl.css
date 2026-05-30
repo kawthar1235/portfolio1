@@ -1,6 +1,16 @@
+/* ── Arabic Font ── */
+@font-face {
+  font-family: 'ArabicFont';
+  src: url('https://res.cloudinary.com/dljbum6et/raw/upload/v1780157460/fontt_voul5z.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ── RTL Global Styles ── */
-[dir="rtl"] {
-  font-family: 'ArabicFont', 'DM Sans', system-ui, sans-serif;
+[dir="rtl"],
+[dir="rtl"] * {
+  font-family: 'ArabicFont', sans-serif !important;
 }
 
 /* Navbar */
