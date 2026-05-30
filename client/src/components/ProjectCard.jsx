@@ -1,6 +1,8 @@
+import { useLang } from '../context/LanguageContext';
 import styles from './ProjectCard.module.css';
 
 export default function ProjectCard({ project, type = 'design' }) {
+  const { t } = useLang();
   const {
     title,
     category,
@@ -30,47 +32,44 @@ export default function ProjectCard({ project, type = 'design' }) {
               }}
             />
           )}
-
           <div className={styles.cContent}>
             {project.featured && (
-              <span className={styles.featuredBadge}>Featured</span>
+              <span className={styles.featuredBadge}>
+                {t.projects.featured}
+              </span>
             )}
-
             <h3 className={styles.cTitle}>{title}</h3>
             <div className={styles.cDivider}></div>
             <p className={styles.cDesc}>{description}</p>
           </div>
         </div>
-
         <div className={styles.cFooter}>
           <div className={styles.stackPills}>
-            {(techStack || []).map((t) => (
-              <span key={t} className={styles.spill}>
-                {t}
+            {(techStack || []).map((tech) => (
+              <span key={tech} className={styles.spill}>
+                {tech}
               </span>
             ))}
           </div>
-
           <div className={styles.cLinks}>
             {liveUrl && (
-              <a
+              
                 href={liveUrl}
                 target="_blank"
                 rel="noreferrer"
                 className={styles.cLink}
               >
-                Live →
+                {t.projects.live}
               </a>
             )}
-
             {githubUrl && (
-              <a
+              
                 href={githubUrl}
                 target="_blank"
                 rel="noreferrer"
                 className={styles.cLink}
               >
-                GitHub →
+                {t.projects.github}
               </a>
             )}
           </div>
@@ -92,13 +91,15 @@ export default function ProjectCard({ project, type = 'design' }) {
         ) : (
           <div className={styles.mockScreen} />
         )}
+        <div className={styles.hoverOverlay}>
+          <span className={styles.hoverBtn}>
+            {t.projects.viewProject}
+          </span>
+        </div>
       </div>
-
       <div className={styles.dInfo}>
         <div className={styles.dTag}>{category}</div>
-
         <div className={styles.dTitle}>{title}</div>
-
         <div className={styles.dYear}>{year}</div>
       </div>
     </div>
