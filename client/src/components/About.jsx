@@ -100,7 +100,7 @@ export default function About() {
           ))}
         </div>
 
-        <div className={styles.actions}>
+       <div className={styles.actions}>
           
             href="https://drive.google.com/file/d/10KEp84NphFAmx6q5I2okaAemH5UkKtHT/view?usp=sharing"
             className="btn-ghost" target="_blank" rel="noreferrer"
@@ -108,3 +108,9 @@ export default function About() {
             {t.about.cvBtn}
           </a>
           <a href="#contact" className="btn-ghost">{t.about.chatBtn}</a>
+        </div>
+      </div>
+      <Stickers section="about" />
+    </section>
+  );
+}
