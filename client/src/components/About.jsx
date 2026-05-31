@@ -37,7 +37,7 @@ export default function About() {
 
       <div
         className={`${styles.photoWrap} fade-up`}
-        style={{ transform: 'translateY(-150px)' }}
+        style={{ transform: 'translateY(-200px)' }}
       >
         <img
           src={profileImg}
