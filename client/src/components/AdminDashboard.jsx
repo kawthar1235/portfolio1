@@ -21,9 +21,7 @@ const api = async (path, method = "GET", body) => {
 
 const EMPTY_PROJECT = { title:"", description:"", type:"code", category:"web", techStack:"", liveUrl:"", githubUrl:"", year:new Date().getFullYear().toString(), featured:false, image:"" };
 const EMPTY_SKILL   = { icon:"", name:"", list:"" };
-const EMPTY_CERT    = { name:"", issuer:"", year:"", link:"", image:"" };
-
-const ADMIN_STYLE = { direction:"ltr", textAlign:"left", fontFamily:"'DM Sans', sans-serif", fontSize:"initial" };
+const ADMIN_STYLE   = { direction:"ltr", textAlign:"left", fontFamily:"'DM Sans', sans-serif", fontSize:"initial" };
 
 export default function AdminDashboard() {
   const [token,        setToken]        = useState(typeof window !== "undefined" ? localStorage.getItem("adminToken") || "" : "");
@@ -31,11 +29,7 @@ export default function AdminDashboard() {
   const [projects,     setProjects]     = useState([]);
   const [messages,     setMessages]     = useState([]);
   const [skills,       setSkills]       = useState([]);
-  const [certs,        setCerts]        = useState([]);
   const [skillForm,    setSkillForm]    = useState(EMPTY_SKILL);
-  const [certForm,     setCertForm]     = useState(EMPTY_CERT);
-  const [certImg,      setCertImg]      = useState(null);
-  const [certImgPrev,  setCertImgPrev]  = useState("");
   const [modal,        setModal]        = useState(null);
   const [form,         setForm]         = useState(EMPTY_PROJECT);
   const [editId,       setEditId]       = useState(null);
@@ -66,7 +60,6 @@ export default function AdminDashboard() {
     api("/projects").then((d) => setProjects(Array.isArray(d) ? d : [])).catch(console.error);
     api("/admin/messages").then((d) => setMessages(Array.isArray(d) ? d : [])).catch(console.error);
     api("/skills").then((d) => setSkills(Array.isArray(d) ? d : [])).catch(console.error);
-    api("/certificates").then((d) => setCerts(Array.isArray(d) ? d : [])).catch(console.error);
   }, [token]);
 
   const handleImageChange = (e) => {
@@ -74,16 +67,16 @@ export default function AdminDashboard() {
     setImageFile(file); setImagePreview(URL.createObjectURL(file));
   };
 
-  const uploadImage = async (file, current) => {
-    if (!file) return current || "";
+  const uploadImage = async () => {
+    if (!imageFile) return form.image || "";
     setUploading(true);
     const data = new FormData();
-    data.append("file", file); data.append("upload_preset", UPLOAD_PRESET);
+    data.append("file", imageFile); data.append("upload_preset", UPLOAD_PRESET);
     try {
       const res  = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { method:"POST", body:data });
       const json = await res.json();
       setUploading(false); return json.secure_url;
-    } catch { setUploading(false); showToast("❌ Image upload failed"); return current || ""; }
+    } catch { setUploading(false); showToast("❌ Image upload failed"); return form.image || ""; }
   };
 
   const openAdd  = () => { setForm(EMPTY_PROJECT); setEditId(null); setImageFile(null); setImagePreview(""); setModal("add"); };
@@ -91,7 +84,7 @@ export default function AdminDashboard() {
 
   const saveProject = async (e) => {
     e.preventDefault(); setLoading(true);
-    const imageUrl = await uploadImage(imageFile, form.image);
+    const imageUrl = await uploadImage();
     const payload  = { ...form, image:imageUrl, techStack:(form.techStack||"").split(",").map(s=>s.trim()).filter(Boolean) };
     try {
       if (modal === "add") { const c = await api("/projects","POST",payload); setProjects(ps=>[c,...ps]); showToast("✅ Project added!"); }
@@ -125,26 +118,9 @@ export default function AdminDashboard() {
     catch { showToast("❌ Failed to delete"); }
   };
 
-  const addCert = async (e) => {
-    e.preventDefault();
-    try {
-      const imageUrl = await uploadImage(certImg, certForm.image);
-      const payload  = { ...certForm, image:imageUrl };
-      const created  = await api("/certificates","POST",payload);
-      setCerts(prev=>[created,...prev]);
-      setCertForm(EMPTY_CERT); setCertImg(null); setCertImgPrev("");
-      showToast("✅ Certificate added!");
-    } catch (err) { showToast("❌ "+(err.message||"Error")); }
-  };
-
-  const deleteCert = async (id) => {
-    if (!confirm("Delete this certificate?")) return;
-    try { await api(`/certificates/${id}`,"DELETE"); setCerts(prev=>prev.filter(c=>c._id!==id)); showToast("🗑️ Certificate deleted!"); }
-    catch { showToast("❌ Failed to delete"); }
-  };
-
   const filtered = filter === "all" ? projects : projects.filter(p=>p.type===filter);
 
+  // ── LOGIN ──
   if (!token) return (
     <div style={{...s.loginWrap,...ADMIN_STYLE}} className="admin-page">
       <div style={s.loginCard}>
@@ -160,12 +136,13 @@ export default function AdminDashboard() {
     </div>
   );
 
+  // ── DASHBOARD ──
   return (
     <div style={{...s.wrap,...ADMIN_STYLE}} className="admin-page">
       <aside style={s.sidebar}>
         <div style={s.sidebarLogo}>kawthar<span style={{color:"#F2A4A5",fontStyle:"italic"}}>.</span></div>
         <nav style={s.nav}>
-          {[["projects","◈ Projects"],["messages","✉ Messages"],["skills","✦ Skills"],["certificates","🎓 Certificates"]].map(([v,l])=>(
+          {[["projects","◈ Projects"],["messages","✉ Messages"],["skills","✦ Skills"]].map(([v,l])=>(
             <button key={v} style={{...s.navBtn,...(view===v?s.navBtnActive:{})}} onClick={()=>setView(v)}>{l}</button>
           ))}
         </nav>
@@ -175,8 +152,8 @@ export default function AdminDashboard() {
       <main style={s.main}>
         <div style={s.header}>
           <div>
-            <div style={s.headerTitle}>{view==="projects"?"Projects":view==="messages"?"Messages":view==="skills"?"Skills":"Certificates"}</div>
-            <div style={s.headerSub}>{view==="projects"?`${projects.length} total`:view==="messages"?`${messages.length} messages`:view==="skills"?`${skills.length} skills`:`${certs.length} certificates`}</div>
+            <div style={s.headerTitle}>{view==="projects"?"Projects":view==="messages"?"Messages":"Skills"}</div>
+            <div style={s.headerSub}>{view==="projects"?`${projects.length} total`:view==="messages"?`${messages.length} messages`:`${skills.length} skills`}</div>
           </div>
           {view==="projects" && <button style={s.btnPrimary} onClick={openAdd}>+ Add Project</button>}
         </div>
@@ -191,11 +168,15 @@ export default function AdminDashboard() {
             </div>
             <div style={s.table}>
               <div style={s.tableHead}>
-                <span style={{flex:0.5}}>Image</span><span style={{flex:2}}>Title</span>
-                <span style={{flex:1}}>Type</span><span style={{flex:1}}>Category</span>
-                <span style={{flex:1}}>Year</span><span style={{flex:1}}>Featured</span><span style={{flex:1}}>Actions</span>
+                <span style={{flex:0.5}}>Image</span>
+                <span style={{flex:2}}>Title</span>
+                <span style={{flex:1}}>Type</span>
+                <span style={{flex:1}}>Category</span>
+                <span style={{flex:1}}>Year</span>
+                <span style={{flex:1}}>Featured</span>
+                <span style={{flex:1}}>Actions</span>
               </div>
-              {filtered.length===0 && <div style={s.empty}>No projects yet!</div>}
+              {filtered.length===0 && <div style={s.empty}>No projects yet — click "+ Add Project"!</div>}
               {filtered.map(p=>(
                 <div key={p._id} style={s.tableRow}>
                   <span style={{flex:0.5}}>{p.image?<img src={p.image} alt={p.title} style={s.thumb}/>:<div style={s.thumbEmpty}>—</div>}</span>
@@ -267,70 +248,9 @@ export default function AdminDashboard() {
             ))}
           </div>
         )}
-
-        {/* CERTIFICATES */}
-        {view==="certificates" && (
-          <div style={s.msgGrid}>
-            <div style={s.msgCard}>
-              <div style={s.modalTitle}>Add Certificate</div>
-              <form onSubmit={addCert} style={s.formGrid}>
-                <div style={s.formGroup}>
-                  <label style={s.label}>Certificate Name *</label>
-                  <input style={s.input} placeholder="React Developer Certificate" value={certForm.name} onChange={e=>setCertForm(f=>({...f,name:e.target.value}))} required />
-                </div>
-                <div style={s.formGroup}>
-                  <label style={s.label}>Issuer *</label>
-                  <input style={s.input} placeholder="Meta, Google, Coursera..." value={certForm.issuer} onChange={e=>setCertForm(f=>({...f,issuer:e.target.value}))} required />
-                </div>
-                <div style={s.formGroup}>
-                  <label style={s.label}>Year *</label>
-                  <input style={s.input} placeholder="2024" value={certForm.year} onChange={e=>setCertForm(f=>({...f,year:e.target.value}))} required />
-                </div>
-                <div style={s.formGroup}>
-                  <label style={s.label}>Certificate Link</label>
-                  <input style={s.input} placeholder="https://..." value={certForm.link} onChange={e=>setCertForm(f=>({...f,link:e.target.value}))} />
-                </div>
-                <div style={{...s.formGroup,gridColumn:"1/-1"}}>
-                  <label style={s.label}>Certificate Image</label>
-                  <div style={s.imageUploadWrap}>
-                    {certImgPrev && (
-                      <div style={s.imagePreviewWrap}>
-                        <img src={certImgPrev} alt="preview" style={s.imagePreview} />
-                        <button type="button" style={s.removeImg} onClick={()=>{setCertImg(null);setCertImgPrev("");}}>✕ Remove</button>
-                      </div>
-                    )}
-                    <label style={s.uploadLabel}>
-                      <input type="file" accept="image/*" onChange={e=>{const f=e.target.files?.[0];if(!f)return;setCertImg(f);setCertImgPrev(URL.createObjectURL(f));}} style={{display:"none"}} />
-                      {certImgPrev?"🔄 Change Image":"📷 Upload Image"}
-                    </label>
-                    <div style={s.uploadHint}>JPG, PNG, WEBP — max 10MB</div>
-                  </div>
-                </div>
-                <div style={{gridColumn:"1/-1"}}>
-                  <button type="submit" style={s.btnPrimary} disabled={uploading}>{uploading?"Uploading...":"+ Add Certificate"}</button>
-                </div>
-              </form>
-            </div>
-
-            {certs.length===0 && <div style={s.empty}>No certificates yet — add them from here!</div>}
-            {certs.map(cert=>(
-              <div key={cert._id} style={s.msgCard}>
-                <div style={s.msgTop}>
-                  <div>
-                    {cert.image && <img src={cert.image} alt={cert.name} style={{width:"60px",height:"45px",objectFit:"cover",borderRadius:"6px",marginBottom:"8px"}} />}
-                    <div style={s.msgName}>{cert.name}</div>
-                    <div style={s.msgEmail}>{cert.issuer} · {cert.year}</div>
-                    {cert.link && <a href={cert.link} target="_blank" rel="noreferrer" style={{fontSize:"0.72rem",color:"#7ec8e8"}}>View Certificate →</a>}
-                  </div>
-                  <button style={s.btnDelete} onClick={()=>deleteCert(cert._id)}>Delete</button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
       </main>
 
-      {/* PROJECT MODAL */}
+      {/* MODAL */}
       {modal && (
         <div style={s.overlay} onClick={()=>setModal(null)}>
           <div style={s.modalCard} onClick={e=>e.stopPropagation()}>
@@ -381,57 +301,57 @@ export default function AdminDashboard() {
 }
 
 const s = {
-  wrap:           { display:"flex", minHeight:"100vh", background:"#0b0b1a", fontFamily:"'DM Sans',sans-serif", color:"rgba(232,228,255,.7)", direction:"ltr", textAlign:"left", fontSize:"initial" },
-  sidebar:        { width:"220px", background:"#111128", borderRight:"1px solid rgba(232,228,255,.08)", display:"flex", flexDirection:"column", padding:"2rem 1.2rem", gap:"0.4rem", flexShrink:0 },
-  sidebarLogo:    { fontFamily:"'Cormorant Garamond',serif", fontSize:"1.6rem", fontWeight:600, color:"#e8e4ff", marginBottom:"2rem", paddingLeft:"0.5rem" },
-  nav:            { display:"flex", flexDirection:"column", gap:"0.3rem", flex:1 },
-  navBtn:         { background:"transparent", border:"none", color:"rgba(232,228,255,.45)", padding:"0.65rem 0.75rem", borderRadius:"0.6rem", textAlign:"left", cursor:"pointer", fontSize:"0.85rem", transition:"all 0.2s" },
-  navBtnActive:   { background:"rgba(91,163,204,.15)", color:"#7ec8e8" },
-  logoutBtn:      { background:"transparent", border:"1px solid rgba(232,228,255,.1)", color:"rgba(232,228,255,.35)", padding:"0.5rem 0.75rem", borderRadius:"0.6rem", cursor:"pointer", fontSize:"0.75rem", textAlign:"left" },
-  main:           { flex:1, padding:"2.5rem 3rem", overflowY:"auto" },
-  header:         { display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:"2rem" },
-  headerTitle:    { fontFamily:"'Cormorant Garamond',serif", fontSize:"2rem", fontWeight:300, color:"#e8e4ff" },
-  headerSub:      { fontSize:"0.78rem", color:"rgba(232,228,255,.35)", marginTop:"0.2rem" },
-  tabs:           { display:"flex", gap:"0.5rem", marginBottom:"1.5rem" },
-  tab:            { background:"transparent", border:"1px solid rgba(232,228,255,.1)", color:"rgba(232,228,255,.4)", padding:"0.35rem 1rem", borderRadius:"2rem", fontSize:"0.75rem", cursor:"pointer", transition:"all 0.2s" },
-  tabActive:      { background:"#5BA3CC", color:"#fff", borderColor:"#5BA3CC" },
-  table:          { background:"#111128", border:"1px solid rgba(232,228,255,.07)", borderRadius:"1rem", overflow:"hidden" },
-  tableHead:      { display:"flex", padding:"0.9rem 1.5rem", background:"rgba(232,228,255,.03)", borderBottom:"1px solid rgba(232,228,255,.07)", fontSize:"0.7rem", letterSpacing:"0.12em", textTransform:"uppercase", color:"rgba(232,228,255,.3)" },
-  tableRow:       { display:"flex", alignItems:"center", padding:"0.9rem 1.5rem", borderBottom:"1px solid rgba(232,228,255,.05)", fontSize:"0.85rem" },
-  thumb:          { width:"44px", height:"44px", borderRadius:"0.5rem", objectFit:"cover" },
-  thumbEmpty:     { width:"44px", height:"44px", borderRadius:"0.5rem", background:"rgba(232,228,255,.05)", display:"flex", alignItems:"center", justifyContent:"center", color:"rgba(232,228,255,.2)", fontSize:"0.75rem" },
-  badge:          { fontSize:"0.65rem", padding:"0.2rem 0.65rem", borderRadius:"2rem", letterSpacing:"0.08em" },
-  empty:          { padding:"3rem", textAlign:"center", color:"rgba(232,228,255,.25)", fontSize:"0.9rem" },
-  msgGrid:        { display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(320px,1fr))", gap:"1.2rem" },
-  msgCard:        { background:"#111128", border:"1px solid rgba(232,228,255,.07)", borderRadius:"1rem", padding:"1.5rem" },
-  msgTop:         { display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:"0.8rem" },
-  msgName:        { fontWeight:500, color:"#e8e4ff", fontSize:"0.95rem" },
-  msgEmail:       { fontSize:"0.75rem", color:"rgba(232,228,255,.35)", marginTop:"0.15rem" },
-  msgSubject:     { fontSize:"0.82rem", color:"#7ec8e8", marginBottom:"0.6rem" },
-  msgBody:        { fontSize:"0.85rem", lineHeight:1.75, color:"rgba(232,228,255,.55)" },
-  msgDate:        { fontSize:"0.7rem", color:"rgba(232,228,255,.25)", marginTop:"1rem" },
-  overlay:        { position:"fixed", inset:0, background:"rgba(0,0,0,.65)", backdropFilter:"blur(4px)", display:"flex", alignItems:"center", justifyContent:"center", zIndex:999 },
-  modalCard:      { background:"#111128", border:"1px solid rgba(232,228,255,.1)", borderRadius:"1.2rem", padding:"2rem", width:"620px", maxWidth:"95vw", maxHeight:"90vh", overflowY:"auto" },
-  modalTitle:     { fontFamily:"'Cormorant Garamond',serif", fontSize:"1.6rem", fontWeight:300, color:"#e8e4ff", marginBottom:"1.5rem" },
-  formGrid:       { display:"grid", gridTemplateColumns:"1fr 1fr", gap:"1rem" },
-  formGroup:      { display:"flex", flexDirection:"column", gap:"0.4rem" },
-  label:          { fontSize:"0.72rem", letterSpacing:"0.1em", textTransform:"uppercase", color:"rgba(232,228,255,.4)" },
-  input:          { background:"rgba(232,228,255,.05)", border:"1px solid rgba(232,228,255,.1)", borderRadius:"0.6rem", padding:"0.65rem 0.9rem", color:"#e8e4ff", fontFamily:"'DM Sans',sans-serif", fontSize:"0.88rem", outline:"none" },
-  imageUploadWrap:{ display:"flex", flexDirection:"column", gap:"0.75rem" },
+  wrap:            { display:"flex", minHeight:"100vh", background:"#0b0b1a", fontFamily:"'DM Sans',sans-serif", color:"rgba(232,228,255,.7)", direction:"ltr", textAlign:"left", fontSize:"initial" },
+  sidebar:         { width:"220px", background:"#111128", borderRight:"1px solid rgba(232,228,255,.08)", display:"flex", flexDirection:"column", padding:"2rem 1.2rem", gap:"0.4rem", flexShrink:0 },
+  sidebarLogo:     { fontFamily:"'Cormorant Garamond',serif", fontSize:"1.6rem", fontWeight:600, color:"#e8e4ff", marginBottom:"2rem", paddingLeft:"0.5rem" },
+  nav:             { display:"flex", flexDirection:"column", gap:"0.3rem", flex:1 },
+  navBtn:          { background:"transparent", border:"none", color:"rgba(232,228,255,.45)", padding:"0.65rem 0.75rem", borderRadius:"0.6rem", textAlign:"left", cursor:"pointer", fontSize:"0.85rem", transition:"all 0.2s" },
+  navBtnActive:    { background:"rgba(91,163,204,.15)", color:"#7ec8e8" },
+  logoutBtn:       { background:"transparent", border:"1px solid rgba(232,228,255,.1)", color:"rgba(232,228,255,.35)", padding:"0.5rem 0.75rem", borderRadius:"0.6rem", cursor:"pointer", fontSize:"0.75rem", textAlign:"left" },
+  main:            { flex:1, padding:"2.5rem 3rem", overflowY:"auto" },
+  header:          { display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:"2rem" },
+  headerTitle:     { fontFamily:"'Cormorant Garamond',serif", fontSize:"2rem", fontWeight:300, color:"#e8e4ff" },
+  headerSub:       { fontSize:"0.78rem", color:"rgba(232,228,255,.35)", marginTop:"0.2rem" },
+  tabs:            { display:"flex", gap:"0.5rem", marginBottom:"1.5rem" },
+  tab:             { background:"transparent", border:"1px solid rgba(232,228,255,.1)", color:"rgba(232,228,255,.4)", padding:"0.35rem 1rem", borderRadius:"2rem", fontSize:"0.75rem", cursor:"pointer", transition:"all 0.2s" },
+  tabActive:       { background:"#5BA3CC", color:"#fff", borderColor:"#5BA3CC" },
+  table:           { background:"#111128", border:"1px solid rgba(232,228,255,.07)", borderRadius:"1rem", overflow:"hidden" },
+  tableHead:       { display:"flex", padding:"0.9rem 1.5rem", background:"rgba(232,228,255,.03)", borderBottom:"1px solid rgba(232,228,255,.07)", fontSize:"0.7rem", letterSpacing:"0.12em", textTransform:"uppercase", color:"rgba(232,228,255,.3)" },
+  tableRow:        { display:"flex", alignItems:"center", padding:"0.9rem 1.5rem", borderBottom:"1px solid rgba(232,228,255,.05)", fontSize:"0.85rem" },
+  thumb:           { width:"44px", height:"44px", borderRadius:"0.5rem", objectFit:"cover" },
+  thumbEmpty:      { width:"44px", height:"44px", borderRadius:"0.5rem", background:"rgba(232,228,255,.05)", display:"flex", alignItems:"center", justifyContent:"center", color:"rgba(232,228,255,.2)", fontSize:"0.75rem" },
+  badge:           { fontSize:"0.65rem", padding:"0.2rem 0.65rem", borderRadius:"2rem", letterSpacing:"0.08em" },
+  empty:           { padding:"3rem", textAlign:"center", color:"rgba(232,228,255,.25)", fontSize:"0.9rem" },
+  msgGrid:         { display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(320px,1fr))", gap:"1.2rem" },
+  msgCard:         { background:"#111128", border:"1px solid rgba(232,228,255,.07)", borderRadius:"1rem", padding:"1.5rem" },
+  msgTop:          { display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:"0.8rem" },
+  msgName:         { fontWeight:500, color:"#e8e4ff", fontSize:"0.95rem" },
+  msgEmail:        { fontSize:"0.75rem", color:"rgba(232,228,255,.35)", marginTop:"0.15rem" },
+  msgSubject:      { fontSize:"0.82rem", color:"#7ec8e8", marginBottom:"0.6rem" },
+  msgBody:         { fontSize:"0.85rem", lineHeight:1.75, color:"rgba(232,228,255,.55)" },
+  msgDate:         { fontSize:"0.7rem", color:"rgba(232,228,255,.25)", marginTop:"1rem" },
+  overlay:         { position:"fixed", inset:0, background:"rgba(0,0,0,.65)", backdropFilter:"blur(4px)", display:"flex", alignItems:"center", justifyContent:"center", zIndex:999 },
+  modalCard:       { background:"#111128", border:"1px solid rgba(232,228,255,.1)", borderRadius:"1.2rem", padding:"2rem", width:"620px", maxWidth:"95vw", maxHeight:"90vh", overflowY:"auto" },
+  modalTitle:      { fontFamily:"'Cormorant Garamond',serif", fontSize:"1.6rem", fontWeight:300, color:"#e8e4ff", marginBottom:"1.5rem" },
+  formGrid:        { display:"grid", gridTemplateColumns:"1fr 1fr", gap:"1rem" },
+  formGroup:       { display:"flex", flexDirection:"column", gap:"0.4rem" },
+  label:           { fontSize:"0.72rem", letterSpacing:"0.1em", textTransform:"uppercase", color:"rgba(232,228,255,.4)" },
+  input:           { background:"rgba(232,228,255,.05)", border:"1px solid rgba(232,228,255,.1)", borderRadius:"0.6rem", padding:"0.65rem 0.9rem", color:"#e8e4ff", fontFamily:"'DM Sans',sans-serif", fontSize:"0.88rem", outline:"none" },
+  imageUploadWrap: { display:"flex", flexDirection:"column", gap:"0.75rem" },
   imagePreviewWrap:{ position:"relative", display:"inline-block" },
-  imagePreview:   { width:"100%", maxHeight:"180px", objectFit:"cover", borderRadius:"0.6rem", border:"1px solid rgba(232,228,255,.1)" },
-  removeImg:      { position:"absolute", top:"0.5rem", right:"0.5rem", background:"rgba(0,0,0,.6)", color:"#f87171", border:"none", borderRadius:"0.4rem", padding:"0.25rem 0.5rem", fontSize:"0.72rem", cursor:"pointer" },
-  uploadLabel:    { display:"inline-flex", alignItems:"center", gap:"0.5rem", background:"rgba(91,163,204,.15)", color:"#7ec8e8", border:"1px solid rgba(91,163,204,.25)", padding:"0.6rem 1.2rem", borderRadius:"0.6rem", fontSize:"0.82rem", cursor:"pointer", width:"fit-content" },
-  uploadHint:     { fontSize:"0.7rem", color:"rgba(232,228,255,.25)" },
-  btnPrimary:     { background:"#5BA3CC", color:"#fff", border:"none", padding:"0.65rem 1.5rem", borderRadius:"2rem", fontFamily:"'DM Sans',sans-serif", fontSize:"0.8rem", cursor:"pointer" },
-  btnGhost:       { background:"transparent", color:"rgba(232,228,255,.5)", border:"1px solid rgba(232,228,255,.15)", padding:"0.65rem 1.5rem", borderRadius:"2rem", fontFamily:"'DM Sans',sans-serif", fontSize:"0.8rem", cursor:"pointer" },
-  btnEdit:        { background:"rgba(91,163,204,.15)", color:"#7ec8e8", border:"1px solid rgba(91,163,204,.2)", padding:"0.3rem 0.75rem", borderRadius:"0.5rem", fontSize:"0.72rem", cursor:"pointer" },
-  btnDelete:      { background:"rgba(242,100,100,.1)", color:"#f87171", border:"1px solid rgba(242,100,100,.2)", padding:"0.3rem 0.75rem", borderRadius:"0.5rem", fontSize:"0.72rem", cursor:"pointer" },
-  toast:          { position:"fixed", bottom:"2rem", right:"2rem", background:"#161630", border:"1px solid rgba(232,228,255,.12)", borderRadius:"0.8rem", padding:"0.9rem 1.4rem", fontSize:"0.85rem", color:"#e8e4ff", boxShadow:"0 8px 32px rgba(0,0,0,.3)", zIndex:9999 },
-  loginWrap:      { minHeight:"100vh", background:"#0b0b1a", display:"flex", alignItems:"center", justifyContent:"center", direction:"ltr", textAlign:"left", fontSize:"initial" },
-  loginCard:      { background:"#111128", border:"1px solid rgba(232,228,255,.09)", borderRadius:"1.2rem", padding:"2.5rem", width:"380px" },
-  loginLogo:      { fontFamily:"'Cormorant Garamond',serif", fontSize:"2rem", fontWeight:600, color:"#e8e4ff", marginBottom:"0.3rem" },
-  loginTitle:     { fontSize:"0.8rem", letterSpacing:"0.15em", textTransform:"uppercase", color:"rgba(232,228,255,.35)", marginBottom:"2rem" },
-  loginForm:      { display:"flex", flexDirection:"column", gap:"1rem" },
-  err:            { fontSize:"0.82rem", color:"#f87171" },
+  imagePreview:    { width:"100%", maxHeight:"180px", objectFit:"cover", borderRadius:"0.6rem", border:"1px solid rgba(232,228,255,.1)" },
+  removeImg:       { position:"absolute", top:"0.5rem", right:"0.5rem", background:"rgba(0,0,0,.6)", color:"#f87171", border:"none", borderRadius:"0.4rem", padding:"0.25rem 0.5rem", fontSize:"0.72rem", cursor:"pointer" },
+  uploadLabel:     { display:"inline-flex", alignItems:"center", gap:"0.5rem", background:"rgba(91,163,204,.15)", color:"#7ec8e8", border:"1px solid rgba(91,163,204,.25)", padding:"0.6rem 1.2rem", borderRadius:"0.6rem", fontSize:"0.82rem", cursor:"pointer", width:"fit-content" },
+  uploadHint:      { fontSize:"0.7rem", color:"rgba(232,228,255,.25)" },
+  btnPrimary:      { background:"#5BA3CC", color:"#fff", border:"none", padding:"0.65rem 1.5rem", borderRadius:"2rem", fontFamily:"'DM Sans',sans-serif", fontSize:"0.8rem", cursor:"pointer" },
+  btnGhost:        { background:"transparent", color:"rgba(232,228,255,.5)", border:"1px solid rgba(232,228,255,.15)", padding:"0.65rem 1.5rem", borderRadius:"2rem", fontFamily:"'DM Sans',sans-serif", fontSize:"0.8rem", cursor:"pointer" },
+  btnEdit:         { background:"rgba(91,163,204,.15)", color:"#7ec8e8", border:"1px solid rgba(91,163,204,.2)", padding:"0.3rem 0.75rem", borderRadius:"0.5rem", fontSize:"0.72rem", cursor:"pointer" },
+  btnDelete:       { background:"rgba(242,100,100,.1)", color:"#f87171", border:"1px solid rgba(242,100,100,.2)", padding:"0.3rem 0.75rem", borderRadius:"0.5rem", fontSize:"0.72rem", cursor:"pointer" },
+  toast:           { position:"fixed", bottom:"2rem", right:"2rem", background:"#161630", border:"1px solid rgba(232,228,255,.12)", borderRadius:"0.8rem", padding:"0.9rem 1.4rem", fontSize:"0.85rem", color:"#e8e4ff", boxShadow:"0 8px 32px rgba(0,0,0,.3)", zIndex:9999 },
+  loginWrap:       { minHeight:"100vh", background:"#0b0b1a", display:"flex", alignItems:"center", justifyContent:"center", direction:"ltr", textAlign:"left", fontSize:"initial" },
+  loginCard:       { background:"#111128", border:"1px solid rgba(232,228,255,.09)", borderRadius:"1.2rem", padding:"2.5rem", width:"380px" },
+  loginLogo:       { fontFamily:"'Cormorant Garamond',serif", fontSize:"2rem", fontWeight:600, color:"#e8e4ff", marginBottom:"0.3rem" },
+  loginTitle:      { fontSize:"0.8rem", letterSpacing:"0.15em", textTransform:"uppercase", color:"rgba(232,228,255,.35)", marginBottom:"2rem" },
+  loginForm:       { display:"flex", flexDirection:"column", gap:"1rem" },
+  err:             { fontSize:"0.82rem", color:"#f87171" },
 };
