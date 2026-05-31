@@ -6,6 +6,7 @@ import projectRoutes from './routes/projectRoutes.js';
 import contactRoutes from './routes/contactRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
 import skillRoutes from './routes/skillRoutes.js';
+import certificateRoutes from './routes/certificateRoutes.js';
 
 import errorMiddleware from './middleware/errorMiddleware.js';
 
@@ -34,6 +35,7 @@ app.use('/api/projects', projectRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/skills', skillRoutes);
+app.use('/api/certificates', certificateRoutes);
 
 app.get('/api/health', (_, res) => {
   res.json({ status: 'ok' });
