@@ -50,6 +50,7 @@ export default function About() {
   const TAGS = lang === 'ar' ? TAGS_AR : TAGS_EN;
 
   const [certificates, setCertificates] = useState([]);
+  const [activeCert, setActiveCert] = useState(0);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -74,7 +75,18 @@ export default function About() {
       .catch(() => setCertificates([]));
   }, []);
 
-  const visibleCertificates = certificates.slice(0, 3);
+  useEffect(() => {
+    if (activeCert >= certificates.length) {
+      setActiveCert(0);
+    }
+  }, [certificates, activeCert]);
+
+  const nextCert = () => {
+    if (!certificates.length) return;
+    setActiveCert((prev) => (prev === certificates.length - 1 ? 0 : prev + 1));
+  };
+
+  const currentCert = certificates[activeCert];
 
   return (
     <section className={styles.about} id="about" ref={ref}>
@@ -181,130 +193,131 @@ export default function About() {
             My <em>certificates</em>
           </h3>
 
-          <div
-            style={{
-              position: 'relative',
-              width: 'min(460px, 100%)',
-              height: '560px',
-              margin: '2rem auto 0',
-            }}
-          >
-            {visibleCertificates.length > 0 ? (
-              visibleCertificates.map((cert, index) => (
-                <article
-                  key={cert._id}
+          {currentCert ? (
+            <div
+              style={{
+                position: 'relative',
+                width: 'min(460px, 100%)',
+                height: '560px',
+                margin: '2rem auto 0',
+              }}
+            >
+              <article
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  width: 'min(420px, calc(100% - 2rem))',
+                  height: '540px',
+                  margin: 'auto',
+                  borderRadius: '28px',
+                  overflow: 'hidden',
+                  background: '#fff',
+                  boxShadow: '0 30px 60px rgba(0, 0, 0, 0.14)',
+                  transition: 'transform 0.28s ease, box-shadow 0.28s ease',
+                  cursor: 'pointer',
+                }}
+                onClick={nextCert}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') nextCert();
+                }}
+              >
+                <img
+                  src={currentCert.image}
+                  alt={currentCert.title}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    display: 'block',
+                    cursor: 'pointer',
+                  }}
+                />
+
+                <div
                   style={{
                     position: 'absolute',
                     inset: 0,
-                    width: 'min(420px, calc(100% - 2rem))',
-                    height: '540px',
-                    margin: 'auto',
-                    borderRadius: '28px',
-                    overflow: 'hidden',
-                    background: '#fff',
-                    boxShadow: '0 30px 60px rgba(0, 0, 0, 0.14)',
-                    transform: `
-                      translateX(${index * 22}px)
-                      translateY(${index * 22}px)
-                      rotate(${index * -2}deg)
-                      scale(${1 - index * 0.045})
-                    `,
-                    zIndex: 10 - index,
-                    transition: 'transform 0.28s ease, box-shadow 0.28s ease',
+                    background:
+                      'linear-gradient(to top, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0.08) 45%, rgba(0,0,0,0) 70%)',
+                    display: 'flex',
+                    alignItems: 'flex-end',
+                    padding: '1.4rem',
+                    pointerEvents: 'none',
                   }}
                 >
-                  <img
-                    src={cert.image}
-                    alt={cert.title}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      display: 'block',
-                    }}
-                  />
+                  <div style={{ color: '#fff', maxWidth: '70%' }}>
+                    <div
+                      style={{
+                        fontFamily: "'Cormorant Garamond', serif",
+                        fontSize: '1.45rem',
+                        fontWeight: 600,
+                        lineHeight: 1.1,
+                        marginBottom: '0.35rem',
+                      }}
+                    >
+                      {currentCert.title}
+                    </div>
 
-                  <div
-                    style={{
-                      position: 'absolute',
-                      inset: 0,
-                      background:
-                        'linear-gradient(to top, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0.08) 45%, rgba(0,0,0,0) 70%)',
-                      display: 'flex',
-                      alignItems: 'flex-end',
-                      padding: '1.4rem',
-                    }}
-                  >
-                    <div style={{ color: '#fff', maxWidth: '70%' }}>
-                      <div
-                        style={{
-                          fontFamily: "'Cormorant Garamond', serif",
-                          fontSize: '1.45rem',
-                          fontWeight: 600,
-                          lineHeight: 1.1,
-                          marginBottom: '0.35rem',
-                        }}
-                      >
-                        {cert.title}
-                      </div>
+                    <div
+                      style={{
+                        fontSize: '0.78rem',
+                        letterSpacing: '0.08em',
+                        textTransform: 'uppercase',
+                        opacity: 0.9,
+                        marginBottom: '0.2rem',
+                      }}
+                    >
+                      {currentCert.issuer}
+                    </div>
 
-                      <div
+                    <div
+                      style={{
+                        fontSize: '0.85rem',
+                        opacity: 0.82,
+                        marginBottom: '0.8rem',
+                      }}
+                    >
+                      {currentCert.year}
+                    </div>
+
+                    {currentCert.url && (
+                      <a
+                        href={currentCert.url}
+                        target="_blank"
+                        rel="noreferrer"
                         style={{
+                          display: 'inline-block',
                           fontSize: '0.78rem',
                           letterSpacing: '0.08em',
                           textTransform: 'uppercase',
-                          opacity: 0.9,
-                          marginBottom: '0.2rem',
+                          color: '#fff',
+                          textDecoration: 'none',
+                          borderBottom: '1px solid rgba(255, 255, 255, 0.55)',
+                          paddingBottom: '0.15rem',
+                          pointerEvents: 'auto',
                         }}
+                        onClick={(e) => e.stopPropagation()}
                       >
-                        {cert.issuer}
-                      </div>
-
-                      <div
-                        style={{
-                          fontSize: '0.85rem',
-                          opacity: 0.82,
-                          marginBottom: '0.8rem',
-                        }}
-                      >
-                        {cert.year}
-                      </div>
-
-                      {cert.url && (
-                        <a
-                          href={cert.url}
-                          target="_blank"
-                          rel="noreferrer"
-                          style={{
-                            display: 'inline-block',
-                            fontSize: '0.78rem',
-                            letterSpacing: '0.08em',
-                            textTransform: 'uppercase',
-                            color: '#fff',
-                            textDecoration: 'none',
-                            borderBottom: '1px solid rgba(255, 255, 255, 0.55)',
-                            paddingBottom: '0.15rem',
-                          }}
-                        >
-                          View Certificate →
-                        </a>
-                      )}
-                    </div>
+                        View Certificate →
+                      </a>
+                    )}
                   </div>
-                </article>
-              ))
-            ) : (
-              <div
-                style={{
-                  textAlign: 'center',
-                  color: 'var(--text3)',
-                  paddingTop: '3rem',
-                }}
-              >
-                {lang === 'ar' ? 'لا توجد شهادات بعد.' : 'No certificates added yet.'}
-              </div>
-            )}
-          </div>
+                </div>
+              </article>
+            </div>
+          ) : (
+            <div
+              style={{
+                textAlign: 'center',
+                color: 'var(--text3)',
+                paddingTop: '3rem',
+              }}
+            >
+              {lang === 'ar' ? 'لا توجد شهادات بعد.' : 'No certificates added yet.'}
+            </div>
+          )}
         </div>
 
         <div className={styles.actions}>
