@@ -6,10 +6,12 @@
   align-items: center;
   background: var(--bg);
 }
+
 .photoWrap {
   position: relative;
   transform: translateY(-40px);
 }
+
 .photo {
   width: 100%;
   height: 420px;
@@ -19,46 +21,103 @@
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
   border: 4px solid rgba(255, 255, 255, 0.15);
 }
+
 @keyframes morph {
   0%   { border-radius: 60% 40% 55% 45% / 50% 55% 45% 50%; }
   33%  { border-radius: 45% 55% 40% 60% / 55% 45% 55% 45%; }
   66%  { border-radius: 55% 45% 60% 40% / 45% 60% 40% 55%; }
   100% { border-radius: 60% 40% 55% 45% / 50% 55% 45% 50%; }
 }
+
 .badge {
-  position: absolute; bottom: -1.5rem; right: -1.8rem;
-  background: var(--blush); border-radius: 1.2rem;
+  position: absolute;
+  bottom: -1.5rem;
+  right: -1.8rem;
+  background: var(--blush);
+  border-radius: 1.2rem;
   padding: 1rem 1.4rem;
-  font-family: 'Cormorant Garamond', serif; color: #090087;
+  font-family: 'Cormorant Garamond', serif;
+  color: #090087;
 }
-.badgeBig { font-size: 2rem; font-weight: 600; line-height: 1; }
-.badgeSm  { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.65; margin-top: 0.2rem; }
-.bio   { font-size: 0.9rem; line-height: 1.85; color: var(--text2); margin: 1rem 0; }
-.extra { font-size: 0.88rem; line-height: 1.85; color: var(--text2); }
+
+.badgeBig {
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.badgeSm {
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.65;
+  margin-top: 0.2rem;
+}
+
+.bio {
+  font-size: 0.9rem;
+  line-height: 1.85;
+  color: var(--text2);
+  margin: 1rem 0;
+}
+
+.extra {
+  font-size: 0.88rem;
+  line-height: 1.85;
+  color: var(--text2);
+}
+
 .stats {
-  display: flex; gap: 2.5rem; margin: 1.8rem 0;
+  display: flex;
+  gap: 2.5rem;
+  margin: 1.8rem 0;
   padding: 1.4rem 1.8rem;
-  background: var(--stat-bg); border-radius: 1rem; border: 1px solid var(--border);
+  background: var(--stat-bg);
+  border-radius: 1rem;
+  border: 1px solid var(--border);
 }
-.statNum  { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 600; color: var(--text); line-height: 1; }
-.statLabel{ font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-top: 0.15rem; }
+
+.statNum {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-top: 0.15rem;
+}
+
 .quote {
   background: var(--quote-bg);
   border-left: 3px solid var(--cerulean);
   border-radius: 0 0.8rem 0.8rem 0;
   padding: 0.9rem 1.2rem;
-  line-height: 1.75; color: var(--text2);
-  font-style: italic; margin: 1.4rem 0;
-  font-family: 'Cormorant Garamond', serif; font-size: 1rem;
-}
-.tags { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-top: 1.5rem; }
-.actions { display: flex; gap: 0.9rem; margin-top: 2rem; }
-@media (max-width: 900px) {
-  .about { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 3rem; }
-  .photo { height: 280px; }
-  .photoWrap { transform: translateY(0); }
+  line-height: 1.75;
+  color: var(--text2);
+  font-style: italic;
+  margin: 1.4rem 0;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
 }
 
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 1.5rem;
+}
+
+.actions {
+  display: flex;
+  gap: 0.9rem;
+  margin-top: 2rem;
+}
 
 .certSection {
   margin-top: 3rem;
@@ -82,10 +141,12 @@
   background: #fff;
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.14);
   transition: transform 0.28s ease, box-shadow 0.28s ease;
+  cursor: pointer;
 }
 
 .certCard:hover {
   box-shadow: 0 40px 80px rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px);
 }
 
 .certImage {
@@ -93,6 +154,12 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  cursor: pointer;
+  transition: transform 0.25s ease;
+}
+
+.certCard:hover .certImage {
+  transform: scale(1.02);
 }
 
 .certOverlay {
@@ -107,6 +174,7 @@
   display: flex;
   align-items: flex-end;
   padding: 1.4rem;
+  pointer-events: none;
 }
 
 .certText {
@@ -145,6 +213,7 @@
   text-decoration: none;
   border-bottom: 1px solid rgba(255, 255, 255, 0.55);
   padding-bottom: 0.15rem;
+  pointer-events: auto;
 }
 
 .certLink:hover {
@@ -155,6 +224,22 @@
   text-align: center;
   color: var(--text3);
   padding-top: 3rem;
+}
+
+@media (max-width: 900px) {
+  .about {
+    grid-template-columns: 1fr;
+    padding: 4rem 1.5rem;
+    gap: 3rem;
+  }
+
+  .photo {
+    height: 280px;
+  }
+
+  .photoWrap {
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 768px) {
