@@ -1,36 +1,26 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useLang } from '../context/LanguageContext';
 import styles from './About.module.css';
 import Stickers from './Stickers';
 import profileImg from '../profile.png';
-
-const API = 'https://portfolio-server-lbwm.onrender.com/api';
-
+ 
 const TAGS_EN = [
   { title: 'Frontend', items: ['React', 'JavaScript', 'HTML', 'CSS'] },
   { title: 'Backend',  items: ['Node.js', 'MongoDB', 'SQL', 'Python', 'Java'] },
   { title: 'Design',   items: ['UI/UX', 'Figma', 'Illustrator', 'Procreate', 'Digital Design', 'Affinity Designer'] },
 ];
-
+ 
 const TAGS_AR = [
   { title: 'الواجهة الأمامية', items: ['React', 'JavaScript', 'HTML', 'CSS'] },
   { title: 'الواجهة الخلفية',  items: ['Node.js', 'MongoDB', 'SQL', 'Python', 'Java'] },
   { title: 'التصميم',          items: ['UI/UX', 'Figma', 'Illustrator', 'Procreate', 'Digital Design', 'Affinity Designer'] },
 ];
-
+ 
 export default function About() {
   const { t, lang } = useLang();
   const ref  = useRef(null);
   const TAGS = lang === 'ar' ? TAGS_AR : TAGS_EN;
-  const [certs, setCerts] = useState([]);
-
-  useEffect(() => {
-    fetch(`${API}/certificates`)
-      .then(r => r.json())
-      .then(d => setCerts(Array.isArray(d) ? d : []))
-      .catch(() => setCerts([]));
-  }, []);
-
+ 
   useEffect(() => {
     const observer = new IntersectionObserver(
       entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
@@ -39,72 +29,28 @@ export default function About() {
     ref.current?.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
     return () => observer.disconnect();
   }, []);
-
+ 
   return (
     <section className={styles.about} id="about" ref={ref}>
-
-      {/* ── LEFT — photo + certificates ── */}
-      <div className={styles.leftCol}>
-
-        <div
-          className={`${styles.photoWrap} fade-up`}
-          style={{ transform: 'translateY(-60px)' }}
-        >
-          <img
-            src={profileImg}
-            alt="Kawthar Alkhawajah"
-            className={styles.photo}
-          />
-          <div className={styles.badge}>
-            <div className={styles.badgeBig}>{t.about.badgeTop}</div>
-            <div className={styles.badgeSm}>{t.about.badgeSub}</div>
-          </div>
+ 
+      <div
+        className={`${styles.photoWrap} fade-up`}
+        style={{ transform: 'translateY(-60px)' }}
+      >
+        <img
+          src={profileImg}
+          alt="Kawthar Alkhawajah"
+          className={styles.photo}
+        />
+        <div className={styles.badge}>
+          <div className={styles.badgeBig}>{t.about.badgeTop}</div>
+          <div className={styles.badgeSm}>{t.about.badgeSub}</div>
         </div>
-
-        {/* ── CERTIFICATES ── */}
-        {certs.length > 0 && (
-          <div className={`${styles.certsWrap} fade-up`}>
-            <div className={styles.certsTitle}>
-              {lang === 'ar' ? '🎓 الشهادات' : '🎓 Certificates'}
-            </div>
-            <div className={styles.certsList}>
-              {certs.map(cert => (
-                <a
-                  key={cert._id}
-                  href={cert.link || '#'}
-                  target={cert.link ? '_blank' : '_self'}
-                  rel="noreferrer"
-                  className={styles.certCard}
-                >
-                  {cert.image && (
-                    <img
-                      src={cert.image}
-                      alt={cert.name}
-                      className={styles.certImg}
-                    />
-                  )}
-                  {!cert.image && (
-                    <div className={styles.certIconWrap}>🎓</div>
-                  )}
-                  <div className={styles.certInfo}>
-                    <div className={styles.certName}>{cert.name}</div>
-                    <div className={styles.certMeta}>{cert.issuer} · {cert.year}</div>
-                  </div>
-                  {cert.link && (
-                    <span className={styles.certArrow}>→</span>
-                  )}
-                </a>
-              ))}
-            </div>
-          </div>
-        )}
-
       </div>
-
-      {/* ── RIGHT — content ── */}
+ 
       <div className={`${styles.content} fade-up`}>
         <div className="section-eyebrow">{t.about.eyebrow}</div>
-
+ 
         <h2 className="section-title">
           {lang === 'ar' ? (
             <>طالبة هندسة برمجيات تعشق <em>بناء تجارب رقمية حديثة</em></>
@@ -112,9 +58,9 @@ export default function About() {
             <>Software Engineering student who loves <em>building modern digital experiences</em></>
           )}
         </h2>
-
+ 
         <p className={styles.bio}>{t.about.bio1}</p>
-
+ 
         <div className={styles.stats}>
           {[
             ['30+',  lang === 'ar' ? 'مشروع وتصميم منجز' : 'Projects & designs completed'],
@@ -127,19 +73,19 @@ export default function About() {
             </div>
           ))}
         </div>
-
+ 
         <blockquote className={styles.quote}>
           {lang === 'ar'
             ? '"البرمجيات الرائعة هي حيث يعمل الإبداع وسهولة الاستخدام والتكنولوجيا معًا بسلاسة."'
             : '"Great software is where creativity, usability, and technology work together seamlessly."'}
         </blockquote>
-
+ 
         <p className={styles.extra}>
           {lang === 'ar'
             ? 'إلى جانب البرمجة والتصميم، أستمتع بالمشاركة في الأنشطة الطلابية، واستكشاف المشاريع الرقمية الإبداعية، والتحسين المستمر لمهاراتي التقنية وحل المشكلات.'
             : 'Besides coding and designing, I enjoy participating in student activities, exploring creative digital projects, and continuously improving my technical and problem-solving skills.'}
         </p>
-
+ 
         <div
           className={styles.tags}
           style={{ display:'flex', gap:'3rem', flexWrap:'wrap', alignItems:'flex-start' }}
@@ -157,7 +103,7 @@ export default function About() {
             </div>
           ))}
         </div>
-
+ 
         <div className={styles.actions}>
           <a
             href="https://drive.google.com/file/d/10KEp84NphFAmx6q5I2okaAemH5UkKtHT/view?usp=sharing"
@@ -171,11 +117,11 @@ export default function About() {
             {t.about.chatBtn}
           </a>
         </div>
-
+ 
       </div>
-
+ 
       <Stickers section="about" />
-
+ 
     </section>
   );
 }
